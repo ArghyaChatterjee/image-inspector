@@ -169,6 +169,7 @@ For your cameras:
 Image resolution is derived directly from the camera or dataset:
 - **Image Width**: 1920
 - **Image Height**: 1080
+
 This information is explicitly used to define the image size.
 
 ---
