@@ -37,7 +37,6 @@ In an **RGB image**, the "image value" refers to the intensity of the **red (R)*
 
 ---
 
-
 Standard Resolutions are: 
 
 - VGA: 640 x 480
@@ -54,6 +53,10 @@ Pixel values range between 0-255 in a png/jpg file. Each pixel has 3 vales which
 ```python
 cd scripts
 python3 print_pixel_values_from_rgb_images.py
+```
+Here is the output:
+```bash
+
 ```
 
 ## Depth Image
@@ -461,7 +464,7 @@ Using the disparity, the depth (\( Z \)) of a point can be calculated as:
 
 Example Value in ROS1:
 ```
-arghya@arghya-Pulse-GL66-12UEK:~/hydra_ws/src/hydra$ rostopic echo /tesse/left_cam/camera_info
+$ rostopic echo /tesse/left_cam/camera_info
 header: 
   seq: 642
   stamp: 
@@ -484,10 +487,68 @@ roi:
   width: 0
   do_rectify: False
 ```
+Example Value in ROS2:
+```
+$ ros2 topic echo /zed/zed_node/left_raw/camera_info
+header:
+  stamp:
+    sec: 1732145703
+    nanosec: 349403554
+  frame_id: zed_left_camera_optical_frame
+height: 1080
+width: 1920
+distortion_model: plumb_bob
+d:
+- -0.17452600598335266
+- 0.027737999334931374
+- 9.976910223485902e-05
+- -0.0003236279881093651
+- 0.0
+k:
+- 1397.1400146484375
+- 0.0
+- 963.5800170898438
+- 0.0
+- 1396.68994140625
+- 540.969970703125
+- 0.0
+- 0.0
+- 1.0
+r:
+- 1.0
+- 0.0
+- 0.0
+- 0.0
+- 1.0
+- 0.0
+- 0.0
+- 0.0
+- 1.0
+p:
+- 1397.1400146484375
+- 0.0
+- 963.5800170898438
+- 0.0
+- 0.0
+- 1396.68994140625
+- 540.969970703125
+- 0.0
+- 0.0
+- 0.0
+- 1.0
+- 0.0
+binning_x: 0
+binning_y: 0
+roi:
+  x_offset: 0
+  y_offset: 0
+  height: 0
+  width: 0
+  do_rectify: false
+```
 
 ### **Summary**
 The term `-B` in the projection matrix represents the baseline offset, translated into pixel units using the focal length `f_x`. This ensures the stereo cameras are correctly modeled for depth estimation. Without this term, depth computations from stereo images would not be possible.
 
-### Read as ROS2 topics
 
-### Read PNG files
+
