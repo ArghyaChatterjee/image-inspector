@@ -1,7 +1,60 @@
 # image-inspector
 This repository is about inspecting images and their instrinsics and extrinsics.
+
+## Clone the repo:
+```bash
+git clone https://github.com/ArghyaChatterjee/image-inspector.git
+cd image-inspector/
+```
+
+# Create a Virtualenv:
+```bash
+python3 -m venv image_inspector_venv
+source image_inspector_venv/bin/activate
+pip3 install --upgrade pip
+pip3 install -r requirements.txt
+```
+
 ## RGB Image
-Standard Resolutions are VGA, HD720p, HD1080p and HD2K.
+In an **RGB image**, the "image value" refers to the intensity of the **red (R)**, **green (G)**, and **blue (B)** color channels for each pixel in the image. These values determine the color and brightness of the pixel.
+
+1. **Pixel Values:** Each pixel in an RGB image has 3 components namely Red (R), Green (G), Blue (B). These components are represented as integer values in most image formats.
+
+2. **Range of Values:**
+   - In **8-bit images** (the most common format for PNG/JPG), each channel ranges from **0 to 255**. Total combinations per pixel: `256` x `256` x `256` = 16,777,216 (16.7 million colors).
+   - In **16-bit images** (less common, used for high-dynamic-range imaging): Each channel ranges from **0 to 65,535**.
+
+3. **Interpretation:**
+   - **(0, 0, 0):** Black (no intensity in any channel).
+   - **(255, 255, 255):** White (maximum intensity in all channels).
+   - **(255, 0, 0):** Pure red (maximum red, no green or blue).
+   - **(0, 255, 0):** Pure green.
+   - **(0, 0, 255):** Pure blue.
+
+4. **Format Differences:**
+   - **PNG:** Lossless compression, preserves exact pixel values.
+   - **JPG:** Lossy compression, may slightly alter pixel values to reduce file size.
+
+---
+
+
+Standard Resolutions are: 
+
+- VGA: 640 x 480
+- HD720: 1280 x 720
+- HD1080: 1920 x 1080
+- HD2K: 2208 x 1248
+
+You can visit the camera control for zed [[here]](https://www.stereolabs.com/docs/video/camera-controls).
+
+### Read as ROS2 topics
+
+### Read PNG files
+Pixel values range between 0-255 in a png/jpg file. Each pixel has 3 vales which are Blue, Green and Red. Here is how you can read them:
+```python
+cd scripts
+python3 print_pixel_values_from_rgb_images.py
+```
 
 ## Depth Image
 For unit8 type grayscaled depth images, they are 8 bit (0-255) depth images having a range of 0 m to 0.255 m. You can export them as jpg or png files. You can directly visualize color depth plots. 
@@ -10,8 +63,12 @@ For unit16 type grayscaled depth images, they are 16 bit (0-65535) depth images 
 
 For float32 type grayscaled depth images, they are 32 bit (1.4×10^−45-3.4×10^38) depth images. Most depth cameras do not have a depth measurement range beyond several hundred meters. So, a float32 image can comfortably represent depth values, commonly from 0 m up to several kilometers (e.g., 3,400,000 meters), if needed. You have to normalize them to 8 bit (0-255) to visualize color depth plots. You can't export them as png files, you have to export as .exr (OpenEXR) or .tiff format (you can use GIMP to visualize them).
 
+### Read as ROS2 topics
+
+### Read PNG files
 The depth values are in millimeters. You can print the depth values in millimeters:
 ```bash
+cd scripts
 python3 print_depth_values_from_depth_image.py 
 ```
 Here is the output:
@@ -53,7 +110,7 @@ Depth images have associated **camera info**. The **camera info** provides essen
 
 ---
 
-### Why Does Camera Info Matter for Depth Images?
+### Camera Info for Depth Images
 Depth images typically provide per-pixel depth values, where each pixel represents the distance to a surface in the scene. To use this data effectively (e.g., to compute 3D coordinates), you need the following information, often provided in the **camera info** message:
 
 1. **Camera Intrinsics**:
@@ -431,4 +488,6 @@ roi:
 ### **Summary**
 The term `-B` in the projection matrix represents the baseline offset, translated into pixel units using the focal length `f_x`. This ensures the stereo cameras are correctly modeled for depth estimation. Without this term, depth computations from stereo images would not be possible.
 
+### Read as ROS2 topics
 
+### Read PNG files
