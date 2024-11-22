@@ -66,16 +66,12 @@ The intrinsic parameters and camera matrices are typically obtained from the **c
 
 ---
 
-### **1. Intrinsic Matrix (`camera_info.k`)**
+### 1. Intrinsic Matrix (`camera_info.k`)
 The intrinsic matrix defines how a 3D point in the camera's coordinate system is projected onto the 2D image plane.
 
-\[
-K = \begin{bmatrix}
-fx & 0  & cx \\
-0  & fy & cy \\
-0  & 0  & 1
-\end{bmatrix}
-\]
+<div align="center">
+  <img src="media/intrinsic_matrix.png" width="200">
+</div>
 
 - **`fx`, `fy` (Focal Lengths)**:
   - These are the scaling factors for pixels in the x and y directions, measured in pixels.
