@@ -18,20 +18,20 @@ pip3 install -r requirements.txt
 ## RGB Image
 In an **RGB image**, the "image value" refers to the intensity of the **red (R)**, **green (G)**, and **blue (B)** color channels for each pixel in the image. These values determine the color and brightness of the pixel.
 
-1. **Pixel Values:** Each pixel in an RGB image has 3 components namely Red (R), Green (G), Blue (B). These components are represented as integer values in most image formats.
+- **Pixel Values:** Each pixel in an RGB image has 3 components namely Red (R), Green (G), Blue (B). These components are represented as integer values in most image formats.
 
-2. **Range of Values:**
+- **Range of Values:**
    - In **8-bit images** (the most common format for PNG/JPG), each channel ranges from **0 to 255**. Total combinations per pixel: `256` x `256` x `256` = 16,777,216 (16.7 million colors).
    - In **16-bit images** (less common, used for high-dynamic-range imaging): Each channel ranges from **0 to 65,535**.
 
-3. **Interpretation:**
+- **Interpretation:**
    - **(0, 0, 0):** Black (no intensity in any channel).
    - **(255, 255, 255):** White (maximum intensity in all channels).
    - **(255, 0, 0):** Pure red (maximum red, no green or blue).
    - **(0, 255, 0):** Pure green.
    - **(0, 0, 255):** Pure blue.
 
-4. **Format Differences:**
+- **Format Differences:**
    - **PNG:** Lossless compression, preserves exact pixel values.
    - **JPG:** Lossy compression, may slightly alter pixel values to reduce file size.
 
@@ -41,12 +41,13 @@ In an **RGB image**, the "image value" refers to the intensity of the **red (R)*
 
 ---
 
-Standard Resolutions are: 
+### Standard Resolutions
 
-- VGA: 640 x 480
-- HD720: 1280 x 720
-- HD1080: 1920 x 1080
-- HD2K: 2208 x 1248
+<div align="center">
+  <img src="media/zed_resolution.png" width="400">
+</div>
+
+
 
 You can visit the camera control for zed [[here]](https://www.stereolabs.com/docs/video/camera-controls).
 
