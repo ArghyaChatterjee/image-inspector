@@ -195,8 +195,8 @@ The values are typically obtained through a **camera calibration process**, such
 
 ---
 
-### **How to Generate These Parameters for ROS**
-To use these intrinsics in ROS, you can encode them into the `CameraInfo` message directly, as shown in your code.
+### Generate camera info parameters for ROS
+To use these intrinsics in ROS, encode them into the `CameraInfo` message directly, as shown in the code.
 
 Example:
 ```python
@@ -244,7 +244,7 @@ The term \( -f_x \cdot B \) arises because the projection matrix incorporates bo
 
 ---
 
-### **How Does This Help?**
+### How Does This Help?
 This term allows stereo matching algorithms to compute the disparity between the left and right images, which is the key to estimating depth. 
 
 Disparity (\( d \)) is defined as:
