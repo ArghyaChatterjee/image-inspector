@@ -100,9 +100,11 @@ Distortion coefficients correct for lens distortions, such as:
 - **Tangential distortion** (caused by misalignment of the lens).
 
 Distortion coefficients typically follow the model:
-\[
-d = [k_1, k_2, p_1, p_2, k_3, \dots]
-\]
+
+<div align="center">
+  <img src="media/distortion_coefficient.png" width="200">
+</div>
+
 - `k_1, k_2, k_3`: Radial distortion coefficients.
 - `p_1, p_2`: Tangential distortion coefficients.
 
@@ -114,13 +116,9 @@ In your case:
 ### **3. Rectification Matrix (`camera_info.r`)**
 The rectification matrix aligns the images from stereo cameras so that their epipolar lines become parallel. For rectified cameras, this is often an identity matrix:
 
-\[
-R = \begin{bmatrix}
-1 & 0 & 0 \\
-0 & 1 & 0 \\
-0 & 0 & 1
-\end{bmatrix}
-\]
+<div align="center">
+  <img src="media/rectification_matrix.png" width="200">
+</div>
 
 This is consistent with the values:
 ```
@@ -135,19 +133,16 @@ camera_info.r = [1.0, 0.0, 0.0,
 The projection matrix maps 3D points to 2D image coordinates, incorporating the intrinsic matrix and additional parameters like stereo baseline for the right camera.
 
 For a stereo camera:
-\[
-P = \begin{bmatrix}
-fx & 0  & cx  & -fx \cdot B \\
-0  & fy & cy  & 0 \\
-0  & 0  & 1   & 0
-\end{bmatrix}
-\]
+
+<div align="center">
+  <img src="media/stereo_projection_matrix.png" width="400">
+</div>
 
 - **Baseline (B)**:
   - The distance between the left and right cameras.
   - The value `-fx * B` is present only in the right camera's projection matrix.
 
-For your cameras:
+For zed cameras:
 - Left Camera:
   ```
   camera_info.p = [1388.96728515625, 0.0, 954.34521484375, 0.0, 
@@ -221,14 +216,9 @@ In the context of stereo cameras, the **baseline** refers to the physical distan
 ### **What Does `-B` Mean?**
 In the **projection matrix** for the right camera, `-B` appears as part of the translation term. Specifically:
 
-\[
-P_{\text{right}} = 
-\begin{bmatrix}
-f_x & 0 & c_x & -f_x \cdot B \\
-0 & f_y & c_y & 0 \\
-0 & 0 & 1 & 0
-\end{bmatrix}
-\]
+<div align="center">
+  <img src="media/right_camera_projection_matrix.png" width="400">
+</div>
 
 Here:
 - \( f_x \): Focal length in the x-direction (in pixels).
