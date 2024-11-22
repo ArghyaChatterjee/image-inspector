@@ -274,7 +274,7 @@ Z = \frac{f_x \cdot B}{d}
 3. The right camera's projection matrix would then be:
 
 <div align="center">
-  <img src="media/projection_matrix.png" width="200">
+  <img src="media/projection_matrix.png" width="400">
 </div>
 
 ---
