@@ -49,10 +49,12 @@ Depth images typically provide per-pixel depth values, where each pixel represen
 ### How to Use Camera Info with Depth Images
 1. **Project Depth to 3D**:
    - Using the intrinsic matrix \( K \), you can compute the 3D position of any pixel \((u, v)\) with depth \( D \):
-     \[
-     X = \frac{(u - cx) \cdot D}{fx}, \quad Y = \frac{(v - cy) \cdot D}{fy}, \quad Z = D
-     \]
-     Where \( (X, Y, Z) \) are the 3D coordinates in the camera frame.
+
+   <div align="center">
+     <img src="media/depth_calculation.png" width="400">
+   </div>
+   
+     Where X, Y, Z are the 3D coordinates in the camera frame.
 
 2. **Stereo Depth**:
    - For stereo cameras, the projection matrix \( P \) also includes the baseline (distance between the two cameras), which is critical for converting disparity to depth.
