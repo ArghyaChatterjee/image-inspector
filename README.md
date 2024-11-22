@@ -165,6 +165,35 @@ For unit16 type grayscaled depth images, they are 16 bit (0-65535) depth images 
 For float32 type grayscaled depth images, they are 32 bit (1.4×10^−45-3.4×10^38) depth images. Most depth cameras do not have a depth measurement range beyond several hundred meters. So, a float32 image can comfortably represent depth values, commonly from 0 m up to several kilometers (e.g., 3,400,000 meters), if needed. You have to normalize them to 8 bit (0-255) to visualize color depth plots. You can't export them as png files, you have to export as .exr (OpenEXR) or .tiff format (you can use GIMP to visualize them).
 
 ### Read as ROS2 topics
+Depth values range between 0-255 in a ros2 topic.
+```
+$ ros2 topic echo /zed/zed_node/depth/depth_registered
+header:
+  stamp:
+    sec: 1732308300
+    nanosec: 458677632
+  frame_id: zed_left_camera_optical_frame
+height: 1080
+width: 1920
+encoding: 32FC1
+is_bigendian: 0
+step: 7680
+data:
+- 255
+- 255
+- 255
+- 127
+- 255
+- 255
+- 255
+- 127
+- 255
+- 255
+- 255
+- 127
+- 255
+- '...'
+```
 
 ### Read PNG files
 The depth values are in millimeters. You can print the depth values in millimeters:
