@@ -52,7 +52,46 @@ In an **RGB image**, the "image value" refers to the intensity of the **red (R)*
 You can visit the camera control for zed [[here]](https://www.stereolabs.com/docs/video/camera-controls).
 
 ### Read as ROS2 topics
+Pixel values can be read as ros 2 topics directly.
+```
+$ ros2 topic echo /zed/zed_node/left/image_rect_color
+header:
+  stamp:
+    sec: 1732307124
+    nanosec: 135420664
+  frame_id: zed_left_camera_optical_frame
+height: 1080
+width: 1920
+encoding: bgra8
+is_bigendian: 0
+step: 7680
+data:
+- 35
+- 93
+- 115
+- 255
+- 40
+- 98
+- 120
+- 255
+- 49
+- 111
+- 130
+- 255
+- 34
+- 92
+- 115
+- 255
+- 28
+- 87
+- 109
+- 255
+- 35
+- 94
+- '...'
+---
 
+```
 ### Read PNG files
 Pixel values range between 0-255 in a png/jpg file. Each pixel has 3 vales which are Blue, Green and Red. Here is how you can read them:
 ```python
