@@ -429,6 +429,6 @@ roi:
 ```
 
 ### **Summary**
-The term \( -B \) in the projection matrix represents the baseline offset, translated into pixel units using the focal length \( f_x \). This ensures the stereo cameras are correctly modeled for depth estimation. Without this term, depth computations from stereo images would not be possible.
+The term `-B` in the projection matrix represents the baseline offset, translated into pixel units using the focal length `f_x`. This ensures the stereo cameras are correctly modeled for depth estimation. Without this term, depth computations from stereo images would not be possible.
 
 
