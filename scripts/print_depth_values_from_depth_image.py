@@ -2,9 +2,7 @@ import cv2
 import numpy as np
 
 # Path to the saved 16-bit depth image
-depth_image_path = "/home/arghya/centerpose_training/scripts/perception-data-logger/convert_svo2_to_other_format/output/20241025_ZED_Mini_Recording_IHMC_robot_lab_room_exploration_res_1920x1080_test_6/depth/depth_000000.png"
-# depth_image_path = "/home/arghya/kitti_depth/data_depth_selection/test_depth_completion_anonymous/velodyne_raw/0000000000.png"
-# depth_image_path = "/home/arghya/centerpose_training/scripts/perception-data-logger/convert_svo2_to_other_format/output/Iphone_recording/2024-11-14--13-36-52/depth/0.png"
+depth_image_path = "/home/arghya/depth/depth_000000.png"
 
 # Load the depth image as a 16-bit grayscale image
 depth_image = cv2.imread(depth_image_path, cv2.IMREAD_UNCHANGED)
