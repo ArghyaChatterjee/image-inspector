@@ -1,10 +1,6 @@
 # image-inspector
 This repository is about inspecting images and their instrinsics and extrinsics.
 
-The number of values in `left_camera_info.d` depends on the distortion model being used. Here's a breakdown:
-
----
-
 ### **Distortion Models**
 1. **Plumb Bob (Standard Radial-Tangential)**
    - Commonly used in most camera calibration tools (e.g., OpenCV).
@@ -60,22 +56,3 @@ The number of values in `left_camera_info.d` depends on the distortion model bei
 ### **Key Difference**
 - **Rectified**: `camera_info.d` values are all zeros (no distortion present).
 - **Raw**: `camera_info.d` contains non-zero coefficients that describe the lens distortion.
-
----
-
-### **In Your Case**
-1. For **Rectified Intrinsics**:
-   ```python
-   camera_info.d = [0.0, 0.0, 0.0, 0.0, 0.0]
-   ```
-
-2. For **Raw Intrinsics** (from the data you provided):
-   ```python
-   left_camera_info.d = [-0.174526006, 0.0277379993, 0.0000997691, -0.000323628, 0.0]
-   ```
-
-The difference is that raw images require these coefficients for undistortion, while rectified images assume no distortion.
-
----
-
-Let me know if you need further clarification!
