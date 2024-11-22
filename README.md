@@ -10,6 +10,28 @@ For unit16 type grayscaled depth images, they are 16 bit (0-65535) depth images 
 
 For float32 type grayscaled depth images, they are 32 bit (1.4×10^−45-3.4×10^38) depth images. Most depth cameras do not have a depth measurement range beyond several hundred meters. So, a float32 image can comfortably represent depth values, commonly from 0 m up to several kilometers (e.g., 3,400,000 meters), if needed. You have to normalize them to 8 bit (0-255) to visualize color depth plots. You can't export them as png files, you have to export as .exr (OpenEXR) or .tiff format (you can use GIMP to visualize them).
 
+The depth values are in millimeters. You can print the depth values in millimeters:
+```bash
+python3 print_depth_values_from_depth_image.py 
+```
+Here is the output:
+```bash
+Depth values (in millimeters):
+[[4769 4773 4780 ... 1658 1654 1650]
+ [4763 4768 4776 ... 1661 1657 1654]
+ [4757 4763 4772 ... 1664 1660 1657]
+ ...
+ [1931 1934 1938 ... 1126 1126 1125]
+ [1929 1932 1935 ... 1125 1125 1124]
+ [1928 1929 1932 ... 1123 1123 1123]]
+Depth at (100, 100): 5128 mm
+Depth at (200, 150): 5281 mm
+Minimum depth: 0 mm
+Maximum depth: 9375 mm
+Mean depth: 3573.328840181327 mm
+```
+If you want to use the depth maps in meters, convert the values of each depth map from millimeters to meters by dividing with 1000. 
+
    <div align="center">
      <img src="media/depth_map.png" width="800">
    </div>
