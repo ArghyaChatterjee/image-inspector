@@ -111,19 +111,6 @@ RGB values for the entire image:
   [195 187 226]
   [224 218 244]
   ...
-  [188 196 198]
-  [188 196 198]
-  [188 196 198]]
-
- [[166 157 204]
-  [193 185 224]
-  [223 217 243]
-  ...
-  [188 196 198]
-  [188 196 198]
-  [188 196 198]]
-
- ...
 
  [[ 41  36  30]
   [ 43  38  32]
@@ -136,14 +123,6 @@ RGB values for the entire image:
  [[ 46  41  35]
   [ 49  44  38]
   [ 49  44  38]
-  ...
-  [104 107 126]
-  [101 104 123]
-  [101 104 123]]
-
- [[ 48  43  37]
-  [ 54  49  43]
-  [ 57  52  46]
   ...
   [105 108 127]
   [102 105 124]
@@ -273,7 +252,7 @@ Depth images typically provide per-pixel depth values, where each pixel represen
 
 ### How to Use Camera Info with Depth Images
 1. **Project Depth to 3D**:
-   - Using the intrinsic matrix \( K \), you can compute the 3D position of any pixel \((u, v)\) with depth \( D \):
+   - Using the intrinsic matrix `K`, you can compute the 3D position of any pixel (`u`, `v`) with depth `D`:
 
    <div align="center">
      <img src="media/depth_calculation.png" width="400">
@@ -282,7 +261,7 @@ Depth images typically provide per-pixel depth values, where each pixel represen
      Where X, Y, Z are the 3D coordinates in the camera frame.
 
 2. **Stereo Depth**:
-   - For stereo cameras, the projection matrix \( P \) also includes the baseline (distance between the two cameras), which is critical for converting disparity to depth.
+   - For stereo cameras, the projection matrix `P` also includes the baseline (distance between the two cameras), which is critical for converting disparity to depth.
 
 3. **Point Cloud Generation**:
    - Depth images and camera info are combined to generate point clouds in the camera's coordinate frame.
