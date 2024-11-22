@@ -60,7 +60,9 @@ This repository is about inspecting images and their instrinsics and extrinsics.
 - **Rectified**: `camera_info.d` values are all zeros (no distortion present).
 - **Raw**: `camera_info.d` contains non-zero coefficients that describe the lens distortion.
 
-- The intrinsic parameters and camera matrices you shared are typically obtained from the **camera calibration process**. Here's how each value is derived or determined:
+## Intrinsics Matrix Derivation
+
+The intrinsic parameters and camera matrices are typically obtained from the **camera calibration process**. Here's how each value is derived or determined:
 
 ---
 
@@ -269,14 +271,10 @@ Z = \frac{f_x \cdot B}{d}
    \]
 
 3. The right camera's projection matrix would then be:
-   \[
-   P_{\text{right}} = 
-   \begin{bmatrix}
-   1388.967 & 0 & 954.345 & -138.897 \\
-   0 & 1388.967 & 531.047 & 0 \\
-   0 & 0 & 1 & 0
-   \end{bmatrix}
-   \]
+
+<div align="center">
+  <img src="media/projection_matrix.png" width="200">
+</div>
 
 ---
 
