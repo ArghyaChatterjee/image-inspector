@@ -13,6 +13,22 @@ For float32 type grayscaled depth images, they are 32 bit (1.4×10^−45-3.4×10
 ## Depth Image Intrinsics and Distortions
 Depth images have associated **camera info**. The **camera info** provides essential calibration and metadata about the camera that captured the depth image. This information is critical for interpreting depth values correctly and for projecting depth pixels into 3D space.
 
+   <div align="center">
+     <img src="media/depth_map.png" width="400">
+   </div>
+
+For Depth Image Info, you can see the smallest and largest value of the depth map. Here is an example:
+```
+ros2 topic echo /zed/zed_node/depth/depth_info
+header:
+  stamp:
+    sec: 0
+    nanosec: 0
+  frame_id: zed_left_camera_optical_frame
+min_depth: 0.6266739368438721
+max_depth: 7.9091668128967285
+```
+
 ---
 
 ### Why Does Camera Info Matter for Depth Images?
