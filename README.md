@@ -10,11 +10,8 @@ For unit16 type grayscaled depth images, they are 16 bit (0-65535) depth images 
 
 For float32 type grayscaled depth images, they are 32 bit (1.4×10^−45-3.4×10^38) depth images. Most depth cameras do not have a depth measurement range beyond several hundred meters. So, a float32 image can comfortably represent depth values, commonly from 0 m up to several kilometers (e.g., 3,400,000 meters), if needed. You have to normalize them to 8 bit (0-255) to visualize color depth plots. You can't export them as png files, you have to export as .exr (OpenEXR) or .tiff format (you can use GIMP to visualize them).
 
-## Depth Image Intrinsics and Distortions
-Depth images have associated **camera info**. The **camera info** provides essential calibration and metadata about the camera that captured the depth image. This information is critical for interpreting depth values correctly and for projecting depth pixels into 3D space.
-
    <div align="center">
-     <img src="media/depth_map.png" width="400">
+     <img src="media/depth_map.png" width="800">
    </div>
 
 For Depth Image Info, you can see the smallest and largest value of the depth map. Here is an example:
@@ -28,6 +25,9 @@ header:
 min_depth: 0.6266739368438721
 max_depth: 7.9091668128967285
 ```
+
+## Depth Image Intrinsics and Distortions
+Depth images have associated **camera info**. The **camera info** provides essential calibration and metadata about the camera that captured the depth image. This information is critical for interpreting depth values correctly and for projecting depth pixels into 3D space
 
 ---
 
