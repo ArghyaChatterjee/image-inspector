@@ -1,10 +1,103 @@
 # image-inspector
 This repository is about inspecting images and their instrinsics and extrinsics.
 ## RGB Image
+Standard Resolutions are VGA, HD720p, HD1080p and HD2K.
 
 ## Depth Image
+For unit8 type grayscaled depth images, they are 8 bit (0-255) depth images having a range of 0 m to 0.255 m. You can export them as jpg or png files. You can directly visualize color depth plots. 
+
+For unit16 type grayscaled depth images, they are 16 bit (0-65535) depth images having a range of 0 m to 65.535 m [[reference]](https://support.stereolabs.com/hc/en-us/articles/5365701074967-Why-is-the-depth-map-so-dark). You can export them as png files. You have to normalize them to 8 bit (0-255) to visualize color depth plots. 
+
+For float32 type grayscaled depth images, they are 32 bit (1.4×10^−45-3.4×10^38) depth images. Most depth cameras do not have a depth measurement range beyond several hundred meters. So, a float32 image can comfortably represent depth values, commonly from 0 m up to several kilometers (e.g., 3,400,000 meters), if needed. You have to normalize them to 8 bit (0-255) to visualize color depth plots. You can't export them as png files, you have to export as .exr (OpenEXR) or .tiff format (you can use GIMP to visualize them).
 
 ## Depth Image Intrinsics and Distortions
+Depth images have associated **camera info**. The **camera info** provides essential calibration and metadata about the camera that captured the depth image. This information is critical for interpreting depth values correctly and for projecting depth pixels into 3D space.
+
+---
+
+### Why Does Camera Info Matter for Depth Images?
+Depth images typically provide per-pixel depth values, where each pixel represents the distance to a surface in the scene. To use this data effectively (e.g., to compute 3D coordinates), you need the following information, often provided in the **camera info** message:
+
+1. **Camera Intrinsics**:
+   - **Intrinsic Matrix (K)**: Maps pixel coordinates to 3D camera coordinates.
+     - Format:
+       ```
+       K = [fx,  0, cx,
+             0, fy, cy,
+             0,  0,  1]
+       ```
+       Where:
+       - `fx` and `fy` are the focal lengths in pixels.
+       - `cx` and `cy` are the optical center coordinates (principal point).
+
+2. **Projection Matrix (P)**:
+   - Used to project 3D points into the 2D image plane.
+   - Includes additional parameters for stereo cameras.
+
+3. **Distortion Model and Coefficients**:
+   - If the depth image is raw (not rectified), these parameters describe the lens distortions.
+   - Rectified depth images typically have zero distortion coefficients.
+
+4. **Resolution**:
+   - The height and width of the depth image, which must match the dimensions of the camera info.
+
+5. **Frame ID**:
+   - Indicates the coordinate frame associated with the depth image (e.g., `left_camera` or `depth_camera`).
+
+---
+
+### How to Use Camera Info with Depth Images
+1. **Project Depth to 3D**:
+   - Using the intrinsic matrix \( K \), you can compute the 3D position of any pixel \((u, v)\) with depth \( D \):
+     \[
+     X = \frac{(u - cx) \cdot D}{fx}, \quad Y = \frac{(v - cy) \cdot D}{fy}, \quad Z = D
+     \]
+     Where \( (X, Y, Z) \) are the 3D coordinates in the camera frame.
+
+2. **Stereo Depth**:
+   - For stereo cameras, the projection matrix \( P \) also includes the baseline (distance between the two cameras), which is critical for converting disparity to depth.
+
+3. **Point Cloud Generation**:
+   - Depth images and camera info are combined to generate point clouds in the camera's coordinate frame.
+
+---
+
+### Example of Camera Info for Depth Images
+Here’s how a typical `CameraInfo` message might look for a depth camera:
+
+```python
+camera_info = CameraInfo()
+camera_info.header.stamp = <timestamp>
+camera_info.header.frame_id = "depth_camera"
+camera_info.height = 720
+camera_info.width = 1280
+camera_info.distortion_model = "plumb_bob"  # Or "none" for rectified images
+camera_info.d = [-0.1, 0.01, 0.0, 0.0, 0.0]  # Distortion coefficients
+camera_info.k = [700.0, 0.0, 640.0, 0.0, 700.0, 360.0, 0.0, 0.0, 1.0]  # Intrinsic matrix
+camera_info.r = [1.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 1.0]  # Rectification matrix
+camera_info.p = [700.0, 0.0, 640.0, 0.0, 0.0, 700.0, 360.0, 0.0, 0.0, 0.0, 1.0, 0.0]  # Projection matrix
+```
+
+---
+
+### How to Attach Camera Info to Depth Images in ROS 2
+When publishing depth images, you can also publish the corresponding `CameraInfo` on a separate topic. For example:
+
+- Depth Image Topic: `/camera/depth/image_raw`
+- Camera Info Topic: `/camera/depth/camera_info`
+
+The subscriber can then synchronize the two topics using tools like `message_filters` in ROS.
+
+---
+
+### How to Check If Your Depth Images Have Camera Info
+1. **Inspect the Camera Info Topic**:
+   Use `ros2 topic echo /camera/depth/camera_info` to see if the camera info is published.
+
+2. **Check the Data**:
+   Look for parameters like `K`, `P`, and `distortion_model` in the output.
+
+---
 
 ## RGB Image Intrinsics and Distortions
 ### **Distortion Models**
@@ -268,5 +361,33 @@ Z = \frac{f_x \cdot B}{d}
 
 ---
 
+Example Value in ROS1:
+```
+arghya@arghya-Pulse-GL66-12UEK:~/hydra_ws/src/hydra$ rostopic echo /tesse/left_cam/camera_info
+header: 
+  seq: 642
+  stamp: 
+    secs: 46
+    nsecs: 404879999
+  frame_id: "left_cam"
+height: 480
+width: 720
+distortion_model: "radial-tangential"
+D: [0.0, 0.0, 0.0, 0.0]
+K: [415.69219381653056, 0.0, 360.0, 0.0, 415.69219381653056, 240.0, 0.0, 0.0, 1.0]
+R: [1.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 1.0]
+P: [415.69219381653056, 0.0, 360.0, 0.0, 0.0, 415.69219381653056, 240.0, 0.0, 0.0, 0.0, 1.0, 0.0]
+binning_x: 0
+binning_y: 0
+roi: 
+  x_offset: 0
+  y_offset: 0
+  height: 0
+  width: 0
+  do_rectify: False
+```
+
 ### **Summary**
 The term \( -B \) in the projection matrix represents the baseline offset, translated into pixel units using the focal length \( f_x \). This ensures the stereo cameras are correctly modeled for depth estimation. Without this term, depth computations from stereo images would not be possible.
+
+
