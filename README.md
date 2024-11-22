@@ -473,21 +473,21 @@ In the **projection matrix** for the right camera, `-B` appears as part of the t
 </div>
 
 Here:
-- \( f_x \): Focal length in the x-direction (in pixels).
-- \( c_x, c_y \): Principal point coordinates.
-- \( B \): Baseline distance between the left and right cameras (in meters).
+- `f_x`: Focal length in the x-direction (in pixels).
+- `c_x, c_y`: Principal point coordinates.
+- `B`: Baseline distance between the left and right cameras (in meters).
 
 ---
 
 ### Reason for `-B` is Multiplied by `f_x` ?
-The term \( -f_x \cdot B \) arises because the projection matrix incorporates both the camera's intrinsics and its relative position in space. The translation \( -f_x \cdot B \) shifts the x-coordinate in the right camera's view to account for the offset caused by the baseline.
+The term `-f_x` \ `B` arises because the projection matrix incorporates both the camera's intrinsics and its relative position in space. The translation \( -f_x \cdot B \) shifts the x-coordinate in the right camera's view to account for the offset caused by the baseline.
 
-- \( B \) is measured in **meters**, but the focal length (\( f_x \)) is in **pixels**. The multiplication \( -f_x \cdot B \) ensures the translation is represented in **pixels**, aligning with the other terms in the projection matrix.
+- `B` is measured in **meters**, but the focal length `f_x` is in **pixels**. The multiplication `-f_x` \ `B` ensures the translation is represented in **pixels**, aligning with the other terms in the projection matrix.
 
 ---
 This term allows stereo matching algorithms to compute the disparity between the left and right images, which is the key to estimating depth. 
 
-Disparity (\( d \)) is defined as:
+Disparity `d` is defined as:
 
 <div align="center">
    <img src="media/depth_map.png" width="400">
@@ -499,14 +499,14 @@ Using the disparity, the depth (\( Z \)) of a point can be calculated as:
    <img src="media/depth_map.png" width="400">
 </div>
 
-- When \( -f_x \cdot B \) is correctly encoded in the projection matrix of the right camera, it simplifies stereo computations.
+- When `-f_x` \ `B` is correctly encoded in the projection matrix of the right camera, it simplifies stereo computations.
 
 ---
 
 ### Example: Computing `-B`
 1. Suppose:
-   - **Baseline** (\( B \)): \( 0.1 \, \text{m} \) (10 cm between the left and right cameras).
-   - **Focal Length** (\( f_x \)): \( 1388.967 \, \text{pixels} \).
+   - **Baseline** `B`: 0.1 m (10 cm between the left and right cameras).
+   - **Focal Length** `f_x`: 1388.967 pixels.
 
 2. The translation term for the right camera becomes:
 
