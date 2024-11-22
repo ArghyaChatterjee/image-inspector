@@ -117,7 +117,7 @@ In your case:
 The rectification matrix aligns the images from stereo cameras so that their epipolar lines become parallel. For rectified cameras, this is often an identity matrix:
 
 <div align="center">
-  <img src="media/rectification_matrix.png" width="200">
+  <img src="media/rectification_matrix.png" width="150">
 </div>
 
 This is consistent with the values:
@@ -135,7 +135,7 @@ The projection matrix maps 3D points to 2D image coordinates, incorporating the 
 For a stereo camera:
 
 <div align="center">
-  <img src="media/stereo_projection_matrix.png" width="400">
+  <img src="media/stereo_projection_matrix.png" width="300">
 </div>
 
 - **Baseline (B)**:
@@ -217,7 +217,7 @@ In the context of stereo cameras, the **baseline** refers to the physical distan
 In the **projection matrix** for the right camera, `-B` appears as part of the translation term. Specifically:
 
 <div align="center">
-  <img src="media/right_camera_projection_matrix.png" width="400">
+  <img src="media/right_camera_projection_matrix.png" width="300">
 </div>
 
 Here:
