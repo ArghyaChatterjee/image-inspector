@@ -3,7 +3,10 @@ This repository is about inspecting images and their instrinsics and extrinsics.
 ## RGB Image
 
 ## Depth Image
-## Image Intrinsics and Distortions
+
+## Depth Image Intrinsics and Distortions
+
+## RGB Image Intrinsics and Distortions
 ### **Distortion Models**
 1. **Plumb Bob (Standard Radial-Tangential)**
    - Commonly used in most camera calibration tools (e.g., OpenCV).
