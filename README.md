@@ -73,19 +73,6 @@ data:
 - 120
 - 255
 - 49
-- 111
-- 130
-- 255
-- 34
-- 92
-- 115
-- 255
-- 28
-- 87
-- 109
-- 255
-- 35
-- 94
 - '...'
 ---
 
@@ -112,14 +99,6 @@ RGB values for the entire image:
   [224 218 244]
   ...
 
- [[ 41  36  30]
-  [ 43  38  32]
-  [ 45  40  34]
-  ...
-  [103 106 125]
-  [ 99 102 121]
-  [101 104 123]]
-
  [[ 46  41  35]
   [ 49  44  38]
   [ 49  44  38]
@@ -144,7 +123,9 @@ For unit16 type grayscaled depth images, they are 16 bit (0-65535) depth images 
 For float32 type grayscaled depth images, they are 32 bit (1.4×10^−45-3.4×10^38) depth images. Most depth cameras do not have a depth measurement range beyond several hundred meters. So, a float32 image can comfortably represent depth values, commonly from 0 m up to several kilometers (e.g., 3,400,000 meters), if needed. You have to normalize them to 8 bit (0-255) to visualize color depth plots. You can't export them as png files, you have to export as .exr (OpenEXR) or .tiff format (you can use GIMP to visualize them).
 
 ### Read as ROS2 topics
-Depth values range between 0-255 in a ros2 topic.
+In ROS2 fir zed cameras, 32 bit float in meters and 16 bit unsigned int in millimeters are used.  
+
+#### Depth values with 32 bit float value 
 ```
 $ ros2 topic echo /zed/zed_node/depth/depth_registered
 header:
@@ -166,13 +147,32 @@ data:
 - 255
 - 255
 - 127
-- 255
-- 255
-- 255
-- 127
-- 255
 - '...'
 ```
+The **`32FC1` encoding** in a depth map refers to the following characteristics:
+- **`32F`:**
+   - Indicates that each pixel value is stored as a **32-bit floating-point number**.
+   - This provides high precision, ideal for representing depth values in real-world units like meters.
+- **`C1`:**
+   - Indicates that the image has **1 channel** (grayscale image).
+   - Each pixel represents a single depth value rather than color or RGB channels.
+- **Encoding:** `32FC1` (floating-point depth values).
+- **Pixel Values:** Each pixel represents the distance (depth) from the camera to the observed surface, typically in meters.
+- **Resolution:**
+  - **Height:** 1080 pixels.
+  - **Width:** 1920 pixels.
+- **Step:** `7680`
+  - This is the number of bytes per row in the image.
+  - For `32FC1`:
+    - Each pixel is 4 bytes (32 bits).
+    - Step = `width` x 4).
+    - (1920 x 4 = 7680).
+- **`is_bigendian`:**
+  - `0` indicates the data is in **little-endian** format (common in most systems).
+
+#### Depth values with 16 bit unsigned integer value 
+
+---
 
 ### Read PNG files
 The depth values are in millimeters. You can print the depth values in millimeters:
