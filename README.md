@@ -116,11 +116,11 @@ Blue channel - Min: 0, Max: 255, Mean: 99.684
 ```
 
 ## Depth Image
-For unit8 type grayscaled depth images, they are 8 bit (0-255) depth images having a range of 0 m to 0.255 m. You can export them as jpg or png files. You can directly visualize color depth plots. 
+- For unit8 type grayscaled depth images, they are 8 bit (0-255) depth images having a range of 0 m to 0.255 m. You can export them as jpg or png files. You can directly visualize color depth plots. 
 
-For unit16 type grayscaled depth images, they are 16 bit (0-65535) depth images having a range of 0 m to 65.535 m [[reference]](https://support.stereolabs.com/hc/en-us/articles/5365701074967-Why-is-the-depth-map-so-dark). You can export them as png files. You have to normalize them to 8 bit (0-255) to visualize color depth plots. 
+- For unit16 type grayscaled depth images, they are 16 bit (0-65535) depth images having a range of 0 m to 65.535 m [[reference]](https://support.stereolabs.com/hc/en-us/articles/5365701074967-Why-is-the-depth-map-so-dark). You can export them as png files. You have to normalize them to 8 bit (0-255) to visualize color depth plots. 
 
-For float32 type grayscaled depth images, they are 32 bit ```(1.4×10^−45-3.4×10^38)``` depth images. Most depth cameras do not have a depth measurement range beyond several hundred meters. So, a float32 image can comfortably represent depth values, commonly from 0 m up to several kilometers (e.g., 3,400,000 meters), if needed. You have to normalize them to 8 bit (0-255) to visualize color depth plots. You can't export them as png files, you have to export as .exr (OpenEXR) or .tiff format (you can use GIMP to visualize them).
+- For float32 type grayscaled depth images, they are 32 bit ```(1.4×10^−45-3.4×10^38)``` depth images. Most depth cameras do not have a depth measurement range beyond several hundred meters. So, a float32 image can comfortably represent depth values, commonly from 0 m up to several kilometers (e.g., 3,400,000 meters), if needed. You have to normalize them to 8 bit (0-255) to visualize color depth plots. You can't export them as png files, you have to export as .exr (OpenEXR) or .tiff format (you can use GIMP to visualize them).
 
 ### Read as ROS2 topics
 In ROS2 fir zed cameras, 32 bit float in meters and 16 bit unsigned int in millimeters are used.  
@@ -153,6 +153,10 @@ data:
 
 - '...'
 ```
+For the provided data, the encoding is **`32FC1`**, indicating a **32-bit floating-point** single-channel depth image. This means each depth value occupies 4 bytes and is directly stored as a floating-point number, unlike `mono16`, where the depth is an integer. 
+
+1. **Encoding**
+
 The **`32FC1` encoding** in a depth map refers to the following characteristics:
 - **`32F`:**
    - Indicates that each pixel value is stored as a **32-bit floating-point number**.
@@ -173,6 +177,58 @@ The **`32FC1` encoding** in a depth map refers to the following characteristics:
     - (1920 x 4 = 7680).
 - **`is_bigendian`:**
   - `0` indicates the data is in **little-endian** format (common in most systems).
+     - The least significant byte (LSB) comes first, followed by more significant bytes. 
+
+---
+
+2. **Converting Data**
+- Each depth value is represented by 4 consecutive bytes.
+- For example:
+  - First 4 bytes: `42`, `10`, `13`, `63`
+  - These bytes are stored in reverse order (little-endian). Convert them into a 32-bit float.
+
+- **Conversion Process**
+   - Arrange bytes in the correct order: `63`, `13`, `10`, `42`.
+   - Interpret them as a 32-bit floating-point number.
+
+- **Example Conversion**
+   1. Bytes: `42`, `10`, `13`, `63`
+      - Rearrange: `63`, `13`, `10`, `42`.
+      - Convert to a 32-bit float:
+        - Using a converter or Python's `struct` module, this gives: **0.577** (meters).
+
+   2. Next bytes: `148`, `37`, `13`, `63`
+      - Rearrange: `63`, `13`, `37`, `148`.
+      - Convert to a float: **0.606** (meters).
+
+   3. Repeat for the subsequent 4-byte groups.
+
+---
+
+3. **Depth Values for the Data**
+Here are the first few depth values (converted):
+
+| Bytes (Reordered)    | Depth (Meters) |
+|-----------------------|----------------|
+| `63 13 10 42`        | 0.577          |
+| `63 13 37 148`       | 0.606          |
+| `63 13 85 222`       | 0.655          |
+| `63 13 136 40`       | 0.704          |
+| `63 13 181 185`      | 0.753          |
+| `63 13 208 94`       | 0.801          |
+
+---
+
+4. **Depth Range**
+The metadata indicates:
+- **Min Depth:** 0.507 meters
+- **Max Depth:** 4.605 meters
+
+The data values fall within this range.
+
+---
+
+The `32FC1` encoding represents each depth value as a 32-bit floating-point number in meters. The `data` array contains byte values that need to be grouped in sets of 4 and rearranged according to little-endian format before converting them to floating-point numbers. These values correspond to distances in meters within the range 0.507 m to 4.605 m. 
 
 #### Depth values with 16 bit unsigned integer value 
 ```
@@ -239,7 +295,8 @@ data:
 
 ---
 
-5. **Depth Values for the Provided Data**
+5. **Depth Values for the Provided Data:**
+
 Using the above interpretation:
 
 | LSB | MSB | Depth (mm) |
@@ -263,6 +320,7 @@ Using the above interpretation:
 - It aligns well with the **min_depth** (~755 mm) and **max_depth** (~17,121 mm) values mentioned earlier.
 
 Each pair of numbers in the `data` field represents a depth value in millimeters, with the MSB coming second. These values can be directly converted to real-world depths by calculating `Depth` = `MSB` x `256` + `LSB`. 
+
 ---
 
 ### Read PNG files
@@ -749,6 +807,7 @@ roi:
   width: 0
   do_rectify: false
 ```
+## Camera Extrinsics
 
 
 
