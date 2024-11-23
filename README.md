@@ -206,6 +206,7 @@ The **`32FC1` encoding** in a depth map refers to the following characteristics:
 ---
 
 3. **Depth Values for the Data**
+   
 Here are the first few depth values (converted):
 
 | Bytes (Reordered)    | Depth (Meters) |
@@ -220,6 +221,7 @@ Here are the first few depth values (converted):
 ---
 
 4. **Depth Range**
+   
 The metadata indicates:
 - **Min Depth:** 0.507 meters
 - **Max Depth:** 4.605 meters
@@ -580,6 +582,7 @@ camera_info.r = [1.0, 0.0, 0.0,
 ---
 
 ### **4. Projection Matrix (`camera_info.p`)**
+
 The projection matrix maps 3D points to 2D image coordinates, incorporating the intrinsic matrix and additional parameters like stereo baseline for the right camera.
 
 For a stereo camera:
@@ -611,6 +614,7 @@ For zed cameras:
 ---
 
 ### **5. Image Size**
+
 Image resolution is derived directly from the camera or dataset:
 - **Image Width**: 1920
 - **Image Height**: 1080
@@ -718,7 +722,6 @@ Using the disparity, the depth (\( Z \)) of a point can be calculated as:
   <img src="media/projection_matrix.png" width="400">
 </div>
 
-### **Summary**
 The term `-B` in the projection matrix represents the baseline offset, translated into pixel units using the focal length `f_x`. This ensures the stereo cameras are correctly modeled for depth estimation. Without this term, depth computations from stereo images would not be possible.
 
 ---
@@ -807,7 +810,83 @@ roi:
   width: 0
   do_rectify: false
 ```
-## Camera Extrinsics
+## Stereo Camera Extrinsics
+
+Camera **extrinsics** describe the spatial relationship between 2 camera pairs. They include:
+
+1. **Translation (t):** The position of the camera in the world coordinate system, typically represented as a 3D vector \([x, y, z]\).
+2. **Rotation (R):** The orientation of the camera relative to the world, represented as a rotation matrix (3x3) or equivalent representations like Euler angles or quaternions.
+
+Together, extrinsics are represented by a **4x4 transformation matrix**:
+\[
+\begin{bmatrix}
+R & t \\
+0 & 1
+\end{bmatrix}
+\]
+This matrix transforms 3D points from the **left camera coordinate system** into the **right camera coordinate system**.
+
+---
+
+### **Find Camera Extrinsics**
+
+In the ROS2 topics, **camera extrinsics are not explicitly included**. However, they can usually be found in the following contexts:
+
+1. **Camera Info Topic**
+The `/camera_info` or equivalent topic often contains **intrinsics** and sometimes hints about extrinsics (e.g., `R` and `P` matrices for stereo cameras). For the ZED camera, extrinsics between the left and right cameras can be deduced from the stereo baseline.
+
+2. **TF Transforms**
+Extrinsics are frequently provided in the form of **TF (transform)** data, which defines the spatial relationship between frames in the robot's coordinate system. For example:
+- TF topics need to be looked at to find its relationship with other frames (e.g., `left_camera_link` or `right_camera_link`).
+- Use the command:
+  ```bash
+  ros2 topic echo /tf
+  ```
+
+3. **Calibration File**
+Extrinsics are typically saved in the camera's calibration files, which ZED provides for stereo setups. These files include:
+- **Rotation matrix (R):** Transform between the left and right cameras.
+- **Translation vector (t):** The stereo baseline distance.
+
+---
+
+### **ZED Camera Extrinsics in a Stereo Setup**
+For the ZED camera:
+- **Left Camera Frame:** The primary frame, often aligned with the global/world frame.
+- **Right Camera Frame:** The extrinsics are typically defined as a transformation from the left to the right camera:
+  \[
+  T_{L \to R} = \begin{bmatrix}
+  R_{L \to R} & t_{L \to R} \\
+  0 & 1
+  \end{bmatrix}
+  \]
+
+---
+
+### **How to Retrieve Extrinsics?**
+
+1. **Look in the TF Tree:**
+   - Run:
+     ```bash
+     ros2 run tf2_tools view_frames
+     ```
+   - This will generate a TF tree where you can see the transformations involving the ZED camera.
+
+2. **Query a Transform:**
+   - For example, to find the extrinsics between the left and the right camera frame:
+     ```bash
+     ros2 run tf2_ros tf2_echo zed_left_camera_frame zed_right_camera_frame
+     ```
+   - This will give you the rotation (quaternion) and translation.
+
+3. **Export Calibration Data:**
+   - If using ZED SDK:
+     ```bash
+     ZED_DepthViewer -o
+     ```
+   - The exported `.conf` or `.yaml` file contains extrinsics.
+
+---
 
 
 
