@@ -820,7 +820,7 @@ Camera **extrinsics** describe the spatial relationship between 2 camera pairs. 
 Together, extrinsics are represented by a **4x4 transformation matrix**:
 
 <div align="center">
-  <img src="media/transformation_matrix.png" width="400">
+  <img src="media/transformation_matrix.png" width="200">
 </div>
 
 This matrix transforms 3D points from the **left camera coordinate system** into the **right camera coordinate system**.
@@ -855,7 +855,7 @@ For the ZED camera:
 - **Right Camera Frame:** The extrinsics are typically defined as a transformation from the left to the right camera:
 
 <div align="center">
-  <img src="media/right_extrinsic.png" width="400">
+  <img src="media/right_extrinsic.png" width="200">
 </div>
 
 ---
