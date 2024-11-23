@@ -814,16 +814,15 @@ roi:
 
 Camera **extrinsics** describe the spatial relationship between 2 camera pairs. They include:
 
-1. **Translation (t):** The position of the camera in the world coordinate system, typically represented as a 3D vector \([x, y, z]\).
-2. **Rotation (R):** The orientation of the camera relative to the world, represented as a rotation matrix (3x3) or equivalent representations like Euler angles or quaternions.
+1. **Translation (t):** The position of the camera in the world coordinate system, typically represented as a 3D vector `(x, y, z)`.
+2. **Rotation (R):** The orientation of the camera relative to the world, represented as a rotation matrix `(3x3)` or equivalent representations like Euler angles or quaternions.
 
 Together, extrinsics are represented by a **4x4 transformation matrix**:
-\[
-\begin{bmatrix}
-R & t \\
-0 & 1
-\end{bmatrix}
-\]
+
+<div align="center">
+  <img src="media/transformation_matrix.png" width="400">
+</div>
+
 This matrix transforms 3D points from the **left camera coordinate system** into the **right camera coordinate system**.
 
 ---
@@ -854,12 +853,10 @@ Extrinsics are typically saved in the camera's calibration files, which ZED prov
 For the ZED camera:
 - **Left Camera Frame:** The primary frame, often aligned with the global/world frame.
 - **Right Camera Frame:** The extrinsics are typically defined as a transformation from the left to the right camera:
-  \[
-  T_{L \to R} = \begin{bmatrix}
-  R_{L \to R} & t_{L \to R} \\
-  0 & 1
-  \end{bmatrix}
-  \]
+
+<div align="center">
+  <img src="media/right_extrinsic.png" width="400">
+</div>
 
 ---
 
