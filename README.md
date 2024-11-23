@@ -175,7 +175,94 @@ The **`32FC1` encoding** in a depth map refers to the following characteristics:
   - `0` indicates the data is in **little-endian** format (common in most systems).
 
 #### Depth values with 16 bit unsigned integer value 
+```
+$ ros2 topic echo /zed/zed_node/depth/depth_registered
+header:
+  stamp:
+    sec: 1732402536
+    nanosec: 805272400
+  frame_id: zed_left_camera_optical_frame
+height: 1080
+width: 1920
+encoding: mono16
+is_bigendian: 0
+step: 3840
+data:
+data:
+- 92
+- 3
+- 93
+- 3
+- 94
+- 3
+- 95
+- 3
+- 97
+- 3
+- 98
+- 3
+- 99
+- 3
+- '...'
+```
+1. **Encoding:**
+   - **`mono16`** indicates that each pixel is represented as a **16-bit unsigned integer** (2 bytes per pixel).
+   - Depth is typically expressed in **millimeters** for `mono16`.
 
+2. **Endianess:**
+   - **Little-endian (is_bigendian = 0):** The least significant byte (LSB) comes first, followed by the most significant byte (MSB).
+   - Each depth value is represented by two consecutive integers in the `data` field, where:
+     - `value = MSB × 256 + LSB`
+
+3. **Example Conversions:**
+   - From the provided data:
+     ```
+     - 92
+     - 3
+     ```
+     These two numbers represent a single depth value:
+     - \( \text{Depth} = 3 \times 256 + 92 = 844 \, \text{mm} \)
+
+   - Next depth value:
+     ```
+     - 93
+     - 3
+     ```
+     - \( \text{Depth} = 3 \times 256 + 93 = 845 \, \text{mm} \)
+
+   - Continuing this pattern, we can interpret subsequent depth values:
+     - \( \text{Depth} = 3 \times 256 + 94 = 846 \, \text{mm} \)
+     - \( \text{Depth} = 3 \times 256 + 95 = 847 \, \text{mm} \)
+
+4. **General Pattern:**
+   - The depth values gradually increase, which likely corresponds to distances in the scene.
+
+---
+
+5. **Depth Values for the Provided Data**
+Using the above interpretation:
+
+| LSB | MSB | Depth (mm) |
+|-----|-----|------------|
+| 92  | 3   | 844        |
+| 93  | 3   | 845        |
+| 94  | 3   | 846        |
+| 95  | 3   | 847        |
+| 97  | 3   | 849        |
+| 98  | 3   | 850        |
+| 99  | 3   | 851        |
+| 100 | 3   | 852        |
+| 101 | 3   | 853        |
+| 103 | 3   | 855        |
+| ... | ... | ...        |
+
+---
+
+6. **Depth Range**
+- The data seems to correspond to increasing depths in millimeters.
+- It aligns well with the **min_depth** (~755 mm) and **max_depth** (~17,121 mm) values mentioned earlier.
+
+Each pair of numbers in the `data` field represents a depth value in millimeters, with the MSB coming second. These values can be directly converted to real-world depths by calculating `Depth` = `MSB` x `256` + `LSB`. 
 ---
 
 ### Read PNG files
@@ -219,7 +306,7 @@ max_depth: 7.9091668128967285
 ```
 
 ## Depth Image Intrinsics and Distortions
-Depth images have associated **camera info**. The **camera info** provides essential calibration and metadata about the camera that captured the depth image. This information is critical for interpreting depth values correctly and for projecting depth pixels into 3D space
+Depth images have associated **camera info**. The **camera info** provides essential calibration and metadata about the camera that captured the depth image. This information is critical for interpreting depth values correctly and for projecting depth pixels into 3D space.
 
 ---
 
