@@ -346,6 +346,7 @@ The subscriber can then synchronize the two topics using tools like `message_fil
    - The distortion has already been corrected.
    - **`camera_info.d` for rectified images**:
      - The number of values will match the distortion model (typically 5 for "plumb_bob").
+   
    Example:
    ```python
    camera_info.d = [0.0, 0.0, 0.0, 0.0, 0.0]
