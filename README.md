@@ -820,7 +820,7 @@ Camera **extrinsics** describe the spatial relationship between 2 camera pairs. 
 Together, extrinsics are represented by a **4x4 transformation matrix**:
 
 <div align="center">
-  <img src="media/transformation_matrix.png" width="200">
+  <img src="media/transformation_matrix.png" width="70">
 </div>
 
 This matrix transforms 3D points from the **left camera coordinate system** into the **right camera coordinate system**.
