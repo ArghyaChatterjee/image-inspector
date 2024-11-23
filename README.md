@@ -120,7 +120,7 @@ For unit8 type grayscaled depth images, they are 8 bit (0-255) depth images havi
 
 For unit16 type grayscaled depth images, they are 16 bit (0-65535) depth images having a range of 0 m to 65.535 m [[reference]](https://support.stereolabs.com/hc/en-us/articles/5365701074967-Why-is-the-depth-map-so-dark). You can export them as png files. You have to normalize them to 8 bit (0-255) to visualize color depth plots. 
 
-For float32 type grayscaled depth images, they are 32 bit (1.4×10^−45-3.4×10^38) depth images. Most depth cameras do not have a depth measurement range beyond several hundred meters. So, a float32 image can comfortably represent depth values, commonly from 0 m up to several kilometers (e.g., 3,400,000 meters), if needed. You have to normalize them to 8 bit (0-255) to visualize color depth plots. You can't export them as png files, you have to export as .exr (OpenEXR) or .tiff format (you can use GIMP to visualize them).
+For float32 type grayscaled depth images, they are 32 bit ```(1.4×10^−45-3.4×10^38)``` depth images. Most depth cameras do not have a depth measurement range beyond several hundred meters. So, a float32 image can comfortably represent depth values, commonly from 0 m up to several kilometers (e.g., 3,400,000 meters), if needed. You have to normalize them to 8 bit (0-255) to visualize color depth plots. You can't export them as png files, you have to export as .exr (OpenEXR) or .tiff format (you can use GIMP to visualize them).
 
 ### Read as ROS2 topics
 In ROS2 fir zed cameras, 32 bit float in meters and 16 bit unsigned int in millimeters are used.  
@@ -139,14 +139,18 @@ encoding: 32FC1
 is_bigendian: 0
 step: 7680
 data:
-- 255
-- 255
-- 255
-- 127
-- 255
-- 255
-- 255
-- 127
+- 71
+- 153
+- 12
+- 63
+- 170
+- 184
+- 12
+- 63
+- 244
+- 234
+- 12
+
 - '...'
 ```
 The **`32FC1` encoding** in a depth map refers to the following characteristics:
