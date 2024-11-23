@@ -341,9 +341,11 @@ The subscriber can then synchronize the two topics using tools like `message_fil
 1. **Rectified Images**
    - The distortion has already been corrected.
    - **`camera_info.d` for rectified images**:
-     ```python
-     camera_info.d = [0.0, 0.0, 0.0, 0.0, 0.0]
-     ```
+     - The number of values will match the distortion model (typically 5 for "plumb_bob").
+   Example:
+   ```python
+   camera_info.d = [0.0, 0.0, 0.0, 0.0, 0.0]
+   ```
    - Even if your model allows more coefficients, all are set to **0** since the rectification removes distortions.
 
 2. **Raw Images**
@@ -566,6 +568,9 @@ Using the disparity, the depth (\( Z \)) of a point can be calculated as:
   <img src="media/projection_matrix.png" width="400">
 </div>
 
+### **Summary**
+The term `-B` in the projection matrix represents the baseline offset, translated into pixel units using the focal length `f_x`. This ensures the stereo cameras are correctly modeled for depth estimation. Without this term, depth computations from stereo images would not be possible.
+
 ---
 
 Example Value in ROS1:
@@ -653,8 +658,7 @@ roi:
   do_rectify: false
 ```
 
-### **Summary**
-The term `-B` in the projection matrix represents the baseline offset, translated into pixel units using the focal length `f_x`. This ensures the stereo cameras are correctly modeled for depth estimation. Without this term, depth computations from stereo images would not be possible.
+
 
 
 
