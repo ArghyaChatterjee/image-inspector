@@ -946,7 +946,7 @@ The fourth column of `P` gives the **translation component**:
 - The `T_x` value directly corresponds to the **baseline distance**:
 
 <div align="center">
-  <img src="media/baseline.png" width="200">
+  <img src="media/baseline.png" width="100">
 </div>
 
 This measures the distance between the left and right cameras in meters.
