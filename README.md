@@ -920,8 +920,8 @@ P: [fx', 0, cx', Tx,
 ### **Role of Intrinsics**
 
 - The **K matrix** represents the camera's intrinsic parameters, such as:
-  - `( f_x, f_y)`: Focal lengths in pixels along the `x` and `y` axes.
-  - `( c_x, c_y)`: Principal point offsets (center of the image).
+  - `(f_x, f_y)`: Focal lengths in pixels along the `x` and `y` axes.
+  - `(c_x, c_y)`: Principal point offsets (center of the image).
 
 ### **Role of Extrinsics in Stereo Cameras**
 
@@ -946,7 +946,7 @@ The fourth column of `P` gives the **translation component**:
 - The `T_x` value directly corresponds to the **baseline distance**:
 
 <div align="center">
-  <img src="media/baseline.png" width="100">
+  <img src="media/baseline.png" width="150">
 </div>
 
 This measures the distance between the left and right cameras in meters.
