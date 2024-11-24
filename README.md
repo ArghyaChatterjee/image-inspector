@@ -742,7 +742,7 @@ The term `-B` in the projection matrix represents the baseline offset, translate
 
 ---
 
-Example Value in ROS1:
+### ROS1 Example:
 ```
 $ rostopic echo /tesse/left_cam/camera_info
 header: 
@@ -767,7 +767,8 @@ roi:
   width: 0
   do_rectify: False
 ```
-Example Value in ROS2 (Left Camera)
+### ROS2 Example
+#### Left Camera Image
 
 ```
 /zed/zed_node/left/camera_info
@@ -828,7 +829,8 @@ roi:
   do_rectify: false (edited) 
 ```
 
-Example Value in ROS2 (Right Camera)
+#### Right Camera Image
+
 ```
 /zed/zed_node/right/camera_info
 header:
@@ -938,7 +940,7 @@ For the ZED camera:
 
 ---
 
-### **How to Retrieve Extrinsics?**
+### **Retrieve Extrinsics**
 
 1. **Look in the TF Tree:**
    - Run:
@@ -1031,7 +1033,7 @@ This measures the distance between the left and right cameras in meters.
 
 ---
 
-### **Use with ZED Camera?**
+### **ZED Camera ROS2 Wrapper**
 
 In the ZED ROS2 wrapper, the `/camera_info` topic for the left and right cameras contains the matrices `R` and `P`. Here’s how to interpret them:
 
@@ -1047,7 +1049,7 @@ In the ZED ROS2 wrapper, the `/camera_info` topic for the left and right cameras
   - **Translation (baseline):** Use `T_x` from the right camera's `P` matrix.
   - **Rotation:** Use `R` matrix from the camera info.
 
-### Calculate the baseline
+### Calculate the Baseline
 
 The **baseline** is the distance between the optical centers of the left and right cameras. It can be calculated using the **projection matrix (P)** of the right camera, specifically the element at position (1, 4) (zero-based indexing, `P[0][3]`). This value represents the translation of the right camera relative to the left camera in the x-axis, scaled by the focal length (`fx`).
 
@@ -1080,7 +1082,7 @@ Where:
 - `P[0][3]` = `-87.42100524902344` (right camera projection matrix, 4th element in the first row).
 - `fx` = `1388.7547607421875` (focal length).
 
-### Calculation
+#### Calculation
 
 <div align="center">
   <img src="media/base_line_detail_calculation.png" width="300">
