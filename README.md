@@ -36,7 +36,7 @@ In an **RGB image**, the "image value" refers to the intensity of the **red (R)*
    - **JPG:** Lossy compression, may slightly alter pixel values to reduce file size.
 
 <div align="center">
-  <img src="media/rgb.png" width="400">
+  <img src="media/rgb.png" width="800">
 </div>
 
 ---
