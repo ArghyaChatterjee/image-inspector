@@ -58,7 +58,7 @@ In an **RGB image**, the "image value" refers to the intensity of the **red (R)*
 ### Standard Resolutions
 
 <div align="center">
-  <img src="media/zed_resolution.png" width="400">
+  <img src="media/zed_resolution.png" width="800">
 </div>
 
 ### Camera Control
