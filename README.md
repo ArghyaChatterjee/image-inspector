@@ -279,18 +279,18 @@ data:
      - 3
      ```
      These two numbers represent a single depth value:
-     - \( \text{Depth} = 3 \times 256 + 92 = 844 \, \text{mm} \)
+     - Depth = 3 x 256 + 92 = 844 mm
 
    - Next depth value:
      ```
      - 93
      - 3
      ```
-     - \( \text{Depth} = 3 \times 256 + 93 = 845 \, \text{mm} \)
+     - Depth = 3 x 256 + 93 = 845 mm
 
    - Continuing this pattern, we can interpret subsequent depth values:
-     - \( \text{Depth} = 3 \times 256 + 94 = 846 \, \text{mm} \)
-     - \( \text{Depth} = 3 \times 256 + 95 = 847 \, \text{mm} \)
+     - Depth = 3 x 256 + 94 = 846 mm
+     - Depth = 3 x 256 + 95 = 847 mm
 
 4. **General Pattern:**
    - The depth values gradually increase, which likely corresponds to distances in the scene.
@@ -692,13 +692,13 @@ This term allows stereo matching algorithms to compute the disparity between the
 Disparity `d` is defined as:
 
 <div align="center">
-   <img src="media/depth_map.png" width="400">
+   <img src="media/disparity.png" width="400">
 </div>
 
-Using the disparity, the depth (\( Z \)) of a point can be calculated as:
+Using the disparity, the depth `Z` of a point can be calculated as:
 
 <div align="center">
-   <img src="media/depth_map.png" width="400">
+   <img src="media/depth.png" width="400">
 </div>
 
 - When `-f_x` \ `B` is correctly encoded in the projection matrix of the right camera, it simplifies stereo computations.
