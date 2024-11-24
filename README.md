@@ -36,9 +36,22 @@ In an **RGB image**, the "image value" refers to the intensity of the **red (R)*
    - **PNG:** Lossless compression, preserves exact pixel values.
    - **JPG:** Lossy compression, may slightly alter pixel values to reduce file size.
 
-<div align="center">
-  <img src="media/rgb.png" width="800">
-</div>
+<table>
+  <tr>
+    <td>
+      <figure>
+        <img src="media/left_zedmini.jpg" alt="Image 1" style="width:100%">
+        <figcaption>Left Image</figcaption>
+      </figure>
+    </td>
+    <td>
+      <figure>
+        <img src="media/right_zedmini.jpg" alt="Image 2" style="width:100%">
+        <figcaption>Right Image</figcaption>
+      </figure>
+    </td>
+  </tr>
+</table>
 
 ---
 
