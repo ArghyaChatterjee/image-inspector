@@ -1,13 +1,14 @@
 # image-inspector
 This repository is about inspecting images and their instrinsics and extrinsics.
 
+# Setup the repo
 ## Clone the repo:
 ```bash
 git clone https://github.com/ArghyaChatterjee/image-inspector.git
 cd image-inspector/
 ```
 
-# Create a Virtualenv:
+## Create a Virtualenv:
 ```bash
 python3 -m venv image_inspector_venv
 source image_inspector_venv/bin/activate
@@ -15,7 +16,7 @@ pip3 install --upgrade pip
 pip3 install -r requirements.txt
 ```
 
-## RGB Image
+# RGB Image
 In an **RGB image**, the "image value" refers to the intensity of the **red (R)**, **green (G)**, and **blue (B)** color channels for each pixel in the image. These values determine the color and brightness of the pixel.
 
 - **Pixel Values:** Each pixel in an RGB image has 3 components namely Red (R), Green (G), Blue (B). These components are represented as integer values in most image formats.
@@ -115,7 +116,7 @@ Green channel - Min: 0, Max: 255, Mean: 101.240
 Blue channel - Min: 0, Max: 255, Mean: 99.684
 ```
 
-## Depth Image
+# Depth Image
 - For unit8 type grayscaled depth images, they are 8 bit (0-255) depth images having a range of 0 m to 0.255 m. You can export them as jpg or png files. You can directly visualize color depth plots. 
 
 - For unit16 type grayscaled depth images, they are 16 bit (0-65535) depth images having a range of 0 m to 65.535 m [[reference]](https://support.stereolabs.com/hc/en-us/articles/5365701074967-Why-is-the-depth-map-so-dark). You can export them as png files. You have to normalize them to 8 bit (0-255) to visualize color depth plots. 
@@ -810,7 +811,7 @@ roi:
   width: 0
   do_rectify: false
 ```
-## Stereo Camera Extrinsics
+# Stereo Camera Extrinsics
 
 Camera **extrinsics** describe the spatial relationship between 2 camera pairs. They include:
 
