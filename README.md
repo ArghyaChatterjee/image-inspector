@@ -1058,7 +1058,7 @@ p:
 The baseline can be extracted as:
 
 <div align="center">
-  <img src="media/baseline_calculation.png" width="150">
+  <img src="media/baseline_calculation.png" width="200">
 </div>
 
 Where:
@@ -1066,15 +1066,10 @@ Where:
 - `fx` = `1388.7547607421875` (focal length).
 
 ### Calculation
-\[
-\text{baseline} = \frac{-(-87.42100524902344)}{1388.7547607421875}
-\]
-\[
-\text{baseline} = \frac{87.42100524902344}{1388.7547607421875}
-\]
-\[
-\text{baseline} \approx 0.063 \, \text{meters (63 mm)}.
-\]
+
+<div align="center">
+  <img src="media/base_line_detail_calculation.png" width="200">
+</div>
 
 ---
 
