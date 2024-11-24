@@ -752,30 +752,31 @@ roi:
   width: 0
   do_rectify: False
 ```
-Example Value in ROS2:
+Example Value in ROS2 (Left Camera)
+
 ```
-$ ros2 topic echo /zed/zed_node/left_raw/camera_info
+/zed/zed_node/left/camera_info
 header:
   stamp:
-    sec: 1732145703
-    nanosec: 349403554
+    sec: 1732143447
+    nanosec: 236044975
   frame_id: zed_left_camera_optical_frame
 height: 1080
 width: 1920
 distortion_model: plumb_bob
 d:
-- -0.17452600598335266
-- 0.027737999334931374
-- 9.976910223485902e-05
-- -0.0003236279881093651
+- 0.0
+- 0.0
+- 0.0
+- 0.0
 - 0.0
 k:
-- 1397.1400146484375
+- 1388.7547607421875
 - 0.0
-- 963.5800170898438
+- 954.3450927734375
 - 0.0
-- 1396.68994140625
-- 540.969970703125
+- 1388.7547607421875
+- 531.047119140625
 - 0.0
 - 0.0
 - 1.0
@@ -790,13 +791,73 @@ r:
 - 0.0
 - 1.0
 p:
-- 1397.1400146484375
+- 1388.7547607421875
 - 0.0
-- 963.5800170898438
+- 954.3450927734375
 - 0.0
 - 0.0
-- 1396.68994140625
-- 540.969970703125
+- 1388.7547607421875
+- 531.047119140625
+- 0.0
+- 0.0
+- 0.0
+- 1.0
+- 0.0
+binning_x: 0
+binning_y: 0
+roi:
+  x_offset: 0
+  y_offset: 0
+  height: 0
+  width: 0
+  do_rectify: false (edited) 
+```
+
+Example Value in ROS2 (Right Camera)
+```
+/zed/zed_node/right/camera_info
+header:
+  stamp:
+    sec: 1732143617
+    nanosec: 31675975
+  frame_id: zed_right_camera_optical_frame
+height: 1080
+width: 1920
+distortion_model: plumb_bob
+d:
+- 0.0
+- 0.0
+- 0.0
+- 0.0
+- 0.0
+k:
+- 1388.7547607421875
+- 0.0
+- 954.3450927734375
+- 0.0
+- 1388.7547607421875
+- 531.047119140625
+- 0.0
+- 0.0
+- 1.0
+r:
+- 1.0
+- 0.0
+- 0.0
+- 0.0
+- 1.0
+- 0.0
+- 0.0
+- 0.0
+- 1.0
+p:
+- 1388.7547607421875
+- 0.0
+- 954.3450927734375
+- -87.42100524902344
+- 0.0
+- 1388.7547607421875
+- 531.047119140625
 - 0.0
 - 0.0
 - 0.0
@@ -811,6 +872,7 @@ roi:
   width: 0
   do_rectify: false
 ```
+
 # Stereo Camera Extrinsics
 
 Camera **extrinsics** describe the spatial relationship between 2 camera pairs. They include:
@@ -970,6 +1032,52 @@ In the ZED ROS2 wrapper, the `/camera_info` topic for the left and right cameras
   - **Translation (baseline):** Use `T_x` from the right camera's `P` matrix.
   - **Rotation:** Use `R` matrix from the camera info.
 
+### Calculate the baseline
 
+The **baseline** is the distance between the optical centers of the left and right cameras. It can be calculated using the **projection matrix (P)** of the right camera, specifically the element at position (1, 4) (zero-based indexing, `P[0][3]`). This value represents the translation of the right camera relative to the left camera in the x-axis, scaled by the focal length (`fx`).
+
+#### Right Camera Projection Matrix
+From the provided data:
+```yaml
+p:
+- 1388.7547607421875  # fx (focal length)
+- 0.0
+- 954.3450927734375  # cx (principal point x)
+- -87.42100524902344  # baseline * fx
+- 0.0
+- 1388.7547607421875  # fy (focal length)
+- 531.047119140625  # cy (principal point y)
+- 0.0
+- 0.0
+- 0.0
+- 1.0
+- 0.0
+```
+
+#### Formula for Baseline
+The baseline can be extracted as:
+\[
+\text{baseline} = \frac{-P[0][3]}{fx}
+\]
+
+Where:
+- \(P[0][3]\) = \(-87.42100524902344\) (right camera projection matrix, 4th element in the first row).
+- \(fx = 1388.7547607421875\) (focal length).
+
+### Calculation
+\[
+\text{baseline} = \frac{-(-87.42100524902344)}{1388.7547607421875}
+\]
+\[
+\text{baseline} = \frac{87.42100524902344}{1388.7547607421875}
+\]
+\[
+\text{baseline} \approx 0.063 \, \text{meters (63 mm)}.
+\]
+
+---
+
+#### Final Result
+The **baseline** is approximately **0.063 meters** or **63 mm**.
 
 
