@@ -885,6 +885,89 @@ For the ZED camera:
 
 ---
 
+### **Camera Info Topic and its Role**
+
+The **camera info topic** (e.g., `/zed/zed_node/left/camera_info`) provides essential calibration parameters for a camera, including:
+
+1. **Intrinsics** – Describe the camera's internal parameters.
+2. **Distortion Coefficients** – Used for correcting lens distortion.
+3. **Extrinsics (for stereo cameras)** – Indirectly describe the spatial relationship between paired cameras (e.g., left and right in stereo setups).
+
+---
+
+### **Structure of Camera Info**
+
+The `/camera_info` message generally contains fields like:
+
+```plaintext
+header:
+  frame_id: zed_left_camera_optical_frame
+height: 1080
+width: 1920
+distortion_model: plumb_bob
+D: [distortion_coefficients]
+K: [fx, 0, cx,
+    0, fy, cy,
+    0,  0,  1]  # Intrinsic Matrix
+R: [rotation_matrix]  # Extrinsics between stereo cameras
+P: [fx', 0, cx', Tx,
+    0, fy', cy', Ty,
+    0,  0,   1,  0]  # Projection Matrix
+```
+
+---
+
+### **Role of Intrinsics**
+
+- The **K matrix** represents the camera's intrinsic parameters, such as:
+  - `( f_x, f_y)`: Focal lengths in pixels along the `x` and `y` axes.
+  - `( c_x, c_y)`: Principal point offsets (center of the image).
+
+### **Role of Extrinsics in Stereo Cameras**
+
+For stereo cameras like ZED, extrinsics define the spatial relationship between the **left and right cameras**. These relationships are captured in:
+
+1. **R (Rotation Matrix):** The 3x3 rotation matrix from the left camera to the right camera.
+   - Represents how the right camera is oriented relative to the left.
+   - Usually close to the identity matrix if the cameras are well-aligned.
+
+2. **P (Projection Matrix):**
+   - Combines intrinsic and extrinsic information.
+   - Contains a baseline translation `T_x` or `T_y` (depending on stereo configuration).
+   - `T_x` = `-f_x` \ `baseline`, where "baseline" is the physical distance between the cameras.
+
+### **Deducing Extrinsics Between Stereo Cameras**
+
+#### From `R` (Rotation Matrix)
+The matrix `R` defines the orientation difference between the left and right cameras. This is a **relative rotation**.
+
+#### From `P` (Projection Matrix)
+The fourth column of `P` gives the **translation component**:
+- The `T_x` value directly corresponds to the **baseline distance**:
+
+<div align="center">
+  <img src="media/baseline.png" width="200">
+</div>
+
+This measures the distance between the left and right cameras in meters.
+
+---
+
+### **Use with ZED Camera?**
+
+In the ZED ROS2 wrapper, the `/camera_info` topic for the left and right cameras contains the matrices `R` and `P`. Here’s how to interpret them:
+
+- **Left Camera:** 
+  - `P` includes the left camera's intrinsic parameters, and `T_x` = 0.
+- **Right Camera:** 
+  - `P` includes the right camera's intrinsic parameters and the baseline distance `T_x`.
+  - `R` contains the rotation between the cameras (often identity).
+
+---
+
+- The extrinsics between the **left and right cameras** can be calculated as:
+  - **Translation (baseline):** Use `T_x` from the right camera's `P` matrix.
+  - **Rotation:** Use `R` matrix from the camera info.
 
 
 
