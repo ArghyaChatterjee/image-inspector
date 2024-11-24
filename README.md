@@ -683,7 +683,7 @@ Here:
 ---
 
 ### Reason for `-B` is Multiplied by `f_x` ?
-The term `-f_x` \ `B` arises because the projection matrix incorporates both the camera's intrinsics and its relative position in space. The translation \( -f_x \cdot B \) shifts the x-coordinate in the right camera's view to account for the offset caused by the baseline.
+The term `-f_x` \ `B` arises because the projection matrix incorporates both the camera's intrinsics and its relative position in space. The translation `-f_x` \ `B` shifts the x-coordinate in the right camera's view to account for the offset caused by the baseline.
 
 - `B` is measured in **meters**, but the focal length `f_x` is in **pixels**. The multiplication `-f_x` \ `B` ensures the translation is represented in **pixels**, aligning with the other terms in the projection matrix.
 
