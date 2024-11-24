@@ -1056,13 +1056,14 @@ p:
 
 #### Formula for Baseline
 The baseline can be extracted as:
-\[
-\text{baseline} = \frac{-P[0][3]}{fx}
-\]
+
+<div align="center">
+  <img src="media/baseline_calculation.png" width="150">
+</div>
 
 Where:
-- \(P[0][3]\) = \(-87.42100524902344\) (right camera projection matrix, 4th element in the first row).
-- \(fx = 1388.7547607421875\) (focal length).
+- `P[0][3]` = `-87.42100524902344` (right camera projection matrix, 4th element in the first row).
+- `fx` = `1388.7547607421875` (focal length).
 
 ### Calculation
 \[
@@ -1077,7 +1078,6 @@ Where:
 
 ---
 
-#### Final Result
 The **baseline** is approximately **0.063 meters** or **63 mm**.
 
 
