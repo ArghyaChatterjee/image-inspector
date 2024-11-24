@@ -713,7 +713,7 @@ Using the disparity, the depth (\( Z \)) of a point can be calculated as:
 2. The translation term for the right camera becomes:
 
 <div align="center">
-   <img src="media/depth_map.png" width="400">
+   <img src="media/translation_term.png" width="400">
 </div>
 
 4. The right camera's projection matrix would then be:
