@@ -692,13 +692,13 @@ This term allows stereo matching algorithms to compute the disparity between the
 Disparity `d` is defined as:
 
 <div align="center">
-   <img src="media/disparity.png" width="400">
+   <img src="media/disparity.png" width="100">
 </div>
 
 Using the disparity, the depth `Z` of a point can be calculated as:
 
 <div align="center">
-   <img src="media/depth.png" width="400">
+   <img src="media/depth.png" width="100">
 </div>
 
 - When `-f_x` \ `B` is correctly encoded in the projection matrix of the right camera, it simplifies stereo computations.
