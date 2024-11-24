@@ -692,7 +692,7 @@ This term allows stereo matching algorithms to compute the disparity between the
 Disparity `d` is defined as:
 
 <div align="center">
-   <img src="media/disparity.png" width="100">
+   <img src="media/disparity.png" width="150">
 </div>
 
 Using the disparity, the depth `Z` of a point can be calculated as:
