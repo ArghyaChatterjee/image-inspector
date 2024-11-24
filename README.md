@@ -1068,7 +1068,7 @@ Where:
 ### Calculation
 
 <div align="center">
-  <img src="media/base_line_detail_calculation.png" width="200">
+  <img src="media/base_line_detail_calculation.png" width="300">
 </div>
 
 ---
