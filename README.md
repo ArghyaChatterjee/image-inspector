@@ -461,7 +461,7 @@ The subscriber can then synchronize the two topics using tools like `message_fil
 ---
 
 ## RGB Image Intrinsics and Distortions
-The **rational polynomial** and **plumb bob** models are prominent methods for modeling lens distortion in camera calibration. Here's a detailed comparison of the two:
+The **rational polynomial** and **plumb bob / radial tangential** models are prominent methods for modeling lens distortion in camera calibration. Here's a detailed comparison of the two:
 
 ### **1. Rational Polynomial Model**
 - **Key Idea**: Uses rational polynomials to model lens distortion, which means it applies a polynomial for both the numerator and denominator of a rational function to represent distortion effects.
@@ -475,7 +475,7 @@ The **rational polynomial** and **plumb bob** models are prominent methods for m
 
 - **Flexibility**: More flexible than simpler models because the rational polynomial can fit more complex distortion patterns, especially for wide-angle or fisheye lenses.
 
-### 2. Plumb Bob Model
+### 2. Plumb Bob / Radial Tangential Model
 - **Key Idea**: A simpler model that primarily focuses on radial and tangential distortion components. It is often referred to as the **pinhole camera model with distortion**.
 - **Distortion Parameters**:
   - Radial distortion (k_1, k_2, k_3), etc.) to account for barrel or pincushion effects.
@@ -488,7 +488,7 @@ The **rational polynomial** and **plumb bob** models are prominent methods for m
 - **Flexibility**: Less flexible compared to the rational polynomial model, as it uses only polynomial terms to model distortions.
 
 ### **Comparison Summary**
-| **Aspect**            | **Rational Polynomial Model**            | **Plumb Bob Model**                        |
+| **Aspect**            | **Rational Polynomial Model**            | **Plumb Bob / Radial Tangential Model**     |
 |------------------------|------------------------------------------|--------------------------------------------|
 | **Complexity**         | More complex, can handle intricate distortions | Simpler, focuses on radial and tangential distortion |
 | **Distortion Types**   | Radial (high degree), tangential         | Radial (low degree), tangential            |
@@ -502,7 +502,7 @@ The **rational polynomial** and **plumb bob** models are prominent methods for m
 - For most standard cameras (opencv) and typical calibration tasks, the **plumb bob model** is simpler and sufficient.
 
 ### **Distortion Models**
-1. **Plumb Bob (Standard Radial-Tangential)**
+1. **Plumb Bob / Radial-Tangential**
    - Commonly used in most camera calibration tools (e.g., OpenCV).
    - Supports radial and tangential distortion.
    - **Expected Values**: **5 coefficients**:
