@@ -483,8 +483,8 @@ The **rational polynomial** and **plumb bob** models are prominent methods for m
   - Radial distortion is modeled using terms like r^2, r^4, r^6, ...
   - Tangential distortion can also be incorporated if needed.
 
-<div align="center">
-  <img src="media/rational_polynomial.png" width="300">
+<div align="left">
+  <img src="media/rational_polynomial.png" width="500">
 </div>
 
 - **Flexibility**: More flexible than simpler models because the rational polynomial can fit more complex distortion patterns, especially for wide-angle or fisheye lenses.
@@ -497,8 +497,8 @@ The **rational polynomial** and **plumb bob** models are prominent methods for m
   - Radial distortion (\(k_1, k_2, k_3\), etc.) to account for barrel or pincushion effects.
   - Tangential distortion (\(p_1, p_2\)) to model lens misalignment.
     
-<div align="center">
-  <img src="media/plumb_bob.png" width="300">
+<div align="left">
+  <img src="media/plumb_bob.png" width="500">
 </div>
 
 - **Flexibility**: Less flexible compared to the rational polynomial model, as it uses only polynomial terms to model distortions.
