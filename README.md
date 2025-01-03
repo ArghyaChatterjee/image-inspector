@@ -12,6 +12,7 @@ This repo consists of 4 parts. They are:
    - [Depth Image](https://github.com/ArghyaChatterjee/image-inspector/tree/main?tab=readme-ov-file#depth-image-1)
    - [Intrinsics Matrix Derivation](https://github.com/ArghyaChatterjee/image-inspector/tree/main?tab=readme-ov-file#intrinsics-matrix-derivation)
 - **[Stereo Camera Extrinsics](https://github.com/ArghyaChatterjee/image-inspector/tree/main?tab=readme-ov-file#stereo-camera-extrinsics)**
+   - [Extrinsics Matrix Derivation](https://github.com/ArghyaChatterjee/image-inspector/tree/main?tab=readme-ov-file#extrinsics-matrix-derivation)
 
 # Setup the repo
 ## Clone the repo:
@@ -1172,12 +1173,12 @@ For stereo cameras like ZED, extrinsics define the spatial relationship between 
    - Contains a baseline translation `T_x` or `T_y` (depending on stereo configuration).
    - `T_x` = `-f_x` \ `baseline`, where "baseline" is the physical distance between the cameras.
 
-### **Deducing Extrinsics Between Stereo Cameras**
+## **Extrinsics Derivation Between Stereo Cameras**
 
-#### From `R` (Rotation Matrix)
+### From `R` (Rotation Matrix)
 The matrix `R` defines the orientation difference between the left and right cameras. This is a **relative rotation**.
 
-#### From `P` (Projection Matrix)
+### From `P` (Projection Matrix)
 The fourth column of `P` gives the **translation component**:
 - The `T_x` value directly corresponds to the **baseline distance**:
 
@@ -1186,8 +1187,6 @@ The fourth column of `P` gives the **translation component**:
 </div>
 
 This measures the distance between the left and right cameras in meters.
-
-### **ZED Camera ROS2 Wrapper**
 
 In the ZED ROS2 wrapper, the `/camera_info` topic for the left and right cameras contains the matrices `R` and `P`. Here’s how to interpret them:
 
