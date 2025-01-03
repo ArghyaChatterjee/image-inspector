@@ -461,6 +461,9 @@ The subscriber can then synchronize the two topics using tools like `message_fil
 ---
 
 ## RGB Image Intrinsics and Distortions
+
+For zed camera, Distortion factor : [k1, k2, p1, p2, k3, k4, k5, k6, s1, s2, s3, s4]. Radial (k1, k2, k3, k4, k5, k6), Tangential (p1,p2) and Prism (s1, s2, s3, s4) distortion.
+
 The **rational polynomial** and **plumb bob / radial tangential** models are prominent methods for modeling lens distortion in camera calibration. Here's a detailed comparison of the two:
 
 ### **1. Rational Polynomial Model**
