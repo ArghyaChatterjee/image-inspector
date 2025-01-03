@@ -9,7 +9,7 @@ This repo consists of 4 parts. They are:
    - [Depth Image](https://github.com/ArghyaChatterjee/image-inspector/tree/main?tab=readme-ov-file#depth-image)
 - **[Stereo Camera Intrinsics](https://github.com/ArghyaChatterjee/image-inspector/tree/main?tab=readme-ov-file#stereo-camera-intrinsics)**
    - [RGB Image](https://github.com/ArghyaChatterjee/image-inspector/tree/main?tab=readme-ov-file#rgb-image-1)
-   - [Depth Image]()
+   - [Depth Image](https://github.com/ArghyaChatterjee/image-inspector/tree/main?tab=readme-ov-file#depth-image-1)
 - **[Stereo Camera Extrinsics]()**
 
 # Setup the repo
