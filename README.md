@@ -7,6 +7,7 @@ This repository is about inspecting images and their instrinsics and extrinsics.
 git clone https://github.com/ArghyaChatterjee/image-inspector.git
 cd image-inspector/
 ```
+---
 
 ## Create a Virtualenv:
 ```bash
@@ -53,7 +54,6 @@ In an **RGB image**, the "image value" refers to the intensity of the **red (R)*
   </tr>
 </table>
 
----
 
 ### Standard Resolutions
 
@@ -339,8 +339,6 @@ Using the above interpretation:
 
 Each pair of numbers in the `data` field represents a depth value in millimeters, with the MSB coming second. These values can be directly converted to real-world depths by calculating `Depth` = `MSB` x `256` + `LSB`. 
 
----
-
 ### Read PNG files
 The depth values are in millimeters. You can print the depth values in millimeters:
 ```bash
@@ -380,11 +378,9 @@ header:
 min_depth: 0.6266739368438721
 max_depth: 7.9091668128967285
 ```
-
+---
 ## Depth Image Intrinsics and Distortions
 Depth images have associated **camera info**. The **camera info** provides essential calibration and metadata about the camera that captured the depth image. This information is critical for interpreting depth values correctly and for projecting depth pixels into 3D space.
-
----
 
 ### Camera Info for Depth Images
 Depth images typically provide per-pixel depth values, where each pixel represents the distance to a surface in the scene. To use this data effectively (e.g., to compute 3D coordinates), you need the following information, often provided in the **camera info** message:
@@ -415,8 +411,6 @@ Depth images typically provide per-pixel depth values, where each pixel represen
 5. **Frame ID**:
    - Indicates the coordinate frame associated with the depth image (e.g., `left_camera` or `depth_camera`).
 
----
-
 ### How to Use Camera Info with Depth Images
 1. **Project Depth to 3D**:
    - Using the intrinsic matrix `K`, you can compute the 3D position of any pixel (`u`, `v`) with depth `D`:
@@ -432,8 +426,6 @@ Depth images typically provide per-pixel depth values, where each pixel represen
 
 3. **Point Cloud Generation**:
    - Depth images and camera info are combined to generate point clouds in the camera's coordinate frame.
-
----
 
 ### Example of Camera Info for Depth Images
 Here’s how a typical `CameraInfo` message might look for a depth camera:
@@ -451,8 +443,6 @@ camera_info.r = [1.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 1.0]  # Rectification m
 camera_info.p = [700.0, 0.0, 640.0, 0.0, 0.0, 700.0, 360.0, 0.0, 0.0, 0.0, 1.0, 0.0]  # Projection matrix
 ```
 
----
-
 ### How to Attach Camera Info to Depth Images in ROS 2
 When publishing depth images, you can also publish the corresponding `CameraInfo` on a separate topic. For example:
 
@@ -460,8 +450,6 @@ When publishing depth images, you can also publish the corresponding `CameraInfo
 - Camera Info Topic: `/camera/depth/camera_info`
 
 The subscriber can then synchronize the two topics using tools like `message_filters` in ROS.
-
----
 
 ### How to Check If Your Depth Images Have Camera Info
 1. **Inspect the Camera Info Topic**:
@@ -475,8 +463,6 @@ The subscriber can then synchronize the two topics using tools like `message_fil
 ## RGB Image Intrinsics and Distortions
 The **rational polynomial** and **plumb bob** models are prominent methods for modeling lens distortion in camera calibration. Here's a detailed comparison of the two:
 
----
-
 ### **1. Rational Polynomial Model**
 - **Key Idea**: Uses rational polynomials to model lens distortion, which means it applies a polynomial for both the numerator and denominator of a rational function to represent distortion effects.
 - **Distortion Parameters**: 
@@ -489,9 +475,7 @@ The **rational polynomial** and **plumb bob** models are prominent methods for m
 
 - **Flexibility**: More flexible than simpler models because the rational polynomial can fit more complex distortion patterns, especially for wide-angle or fisheye lenses.
 
----
-
-### **2. Plumb Bob Model**
+### 2. Plumb Bob Model
 - **Key Idea**: A simpler model that primarily focuses on radial and tangential distortion components. It is often referred to as the **pinhole camera model with distortion**.
 - **Distortion Parameters**:
   - Radial distortion (k_1, k_2, k_3), etc.) to account for barrel or pincushion effects.
@@ -503,8 +487,6 @@ The **rational polynomial** and **plumb bob** models are prominent methods for m
 
 - **Flexibility**: Less flexible compared to the rational polynomial model, as it uses only polynomial terms to model distortions.
 
----
-
 ### **Comparison Summary**
 | **Aspect**            | **Rational Polynomial Model**            | **Plumb Bob Model**                        |
 |------------------------|------------------------------------------|--------------------------------------------|
@@ -515,7 +497,6 @@ The **rational polynomial** and **plumb bob** models are prominent methods for m
 | **Computation**        | More computationally intensive          | Less computationally intensive             |
 | **Standards**          | Used in advanced calibration tasks       | Common in OpenCV and standard tools        |
 
----
 
 - If you need a model for high-precision applications with complex distortion, go for the **rational polynomial model**.
 - For most standard cameras (opencv) and typical calibration tasks, the **plumb bob model** is simpler and sufficient.
@@ -549,8 +530,6 @@ The **rational polynomial** and **plumb bob** models are prominent methods for m
    - Used for omnidirectional or 360-degree cameras.
    - Can support a variable number of coefficients depending on the calibration.
 
----
-
 ### **Rectified vs. Raw Images**
 1. **Rectified Images**
    - The distortion has already been corrected.
@@ -573,17 +552,15 @@ The **rational polynomial** and **plumb bob** models are prominent methods for m
    camera_info.d = [-0.174526006, 0.0277379993, 0.0000997691, -0.000323628, 0.0]
    ```
 
----
-
 ### **Key Difference**
 - **Rectified**: `camera_info.d` values are all zeros (no distortion present).
 - **Raw**: `camera_info.d` contains non-zero coefficients that describe the lens distortion.
 
+---
+
 ## Intrinsics Matrix Derivation
 
 The intrinsic parameters and camera matrices are typically obtained from the **camera calibration process**. Here's how each value is derived or determined:
-
----
 
 ### 1. Intrinsic Matrix (`camera_info.k`)
 The intrinsic matrix defines how a 3D point in the camera's coordinate system is projected onto the 2D image plane.
@@ -607,9 +584,7 @@ The intrinsic matrix defines how a 3D point in the camera's coordinate system is
                    0.0, 0.0, 1.0]
   ```
 
----
-
-### **2. Distortion Coefficients (`camera_info.d`)**
+### 2. Distortion Coefficients (`camera_info.d`)
 Distortion coefficients correct for lens distortions, such as:
 - **Radial distortion** (barrel or pincushion distortion).
 - **Tangential distortion** (caused by misalignment of the lens).
@@ -623,12 +598,10 @@ Distortion coefficients typically follow the model:
 - `k_1, k_2, k_3`: Radial distortion coefficients.
 - `p_1, p_2`: Tangential distortion coefficients.
 
-In your case:
+In this case:
 - Distortion coefficients are all **zero** (`[0. 0. 0. ...]`), indicating rectified images where distortions have already been removed.
 
----
-
-### **3. Rectification Matrix (`camera_info.r`)**
+### 3. Rectification Matrix (`camera_info.r`)
 The rectification matrix aligns the images from stereo cameras so that their epipolar lines become parallel. For rectified cameras, this is often an identity matrix:
 
 <div align="center">
@@ -642,9 +615,7 @@ camera_info.r = [1.0, 0.0, 0.0,
                  0.0, 0.0, 1.0]
 ```
 
----
-
-### **4. Projection Matrix (`camera_info.p`)**
+### 4. Projection Matrix (`camera_info.p`)
 
 The projection matrix maps 3D points to 2D image coordinates, incorporating the intrinsic matrix and additional parameters like stereo baseline for the right camera.
 
@@ -674,17 +645,14 @@ For zed cameras:
   ```
   (Here, `-B` would be the negative baseline multiplied by `fx`).
 
----
 
-### **5. Image Size**
+### 5. Image Size
 
 Image resolution is derived directly from the camera or dataset:
 - **Image Width**: 1920
 - **Image Height**: 1080
 
 This information is explicitly used to define the image size.
-
----
 
 ### **How Are These Values Obtained?**
 The values are typically obtained through a **camera calibration process**, such as:
@@ -704,8 +672,6 @@ The values are typically obtained through a **camera calibration process**, such
 
 3. **Stereo Calibration**:
    - If you're using stereo cameras, a stereo calibration process computes the rectification matrix (`R`) and projection matrix (`P`) in addition to individual camera intrinsics.
-
----
 
 ### Generate camera info parameters for ROS
 To use these intrinsics in ROS, encode them into the `CameraInfo` message directly, as shown in the code.
@@ -742,14 +708,11 @@ Here:
 - `c_x, c_y`: Principal point coordinates.
 - `B`: Baseline distance between the left and right cameras (in meters).
 
----
-
 ### Reason for `-B` is Multiplied by `f_x` ?
 The term `-f_x` \ `B` arises because the projection matrix incorporates both the camera's intrinsics and its relative position in space. The translation `-f_x` \ `B` shifts the x-coordinate in the right camera's view to account for the offset caused by the baseline.
 
 - `B` is measured in **meters**, but the focal length `f_x` is in **pixels**. The multiplication `-f_x` \ `B` ensures the translation is represented in **pixels**, aligning with the other terms in the projection matrix.
 
----
 This term allows stereo matching algorithms to compute the disparity between the left and right images, which is the key to estimating depth. 
 
 Disparity `d` is defined as:
@@ -765,8 +728,6 @@ Using the disparity, the depth `Z` of a point can be calculated as:
 </div>
 
 - When `-f_x` \ `B` is correctly encoded in the projection matrix of the right camera, it simplifies stereo computations.
-
----
 
 ### Example: Computing `-B`
 1. Suppose:
@@ -786,8 +747,6 @@ Using the disparity, the depth `Z` of a point can be calculated as:
 </div>
 
 The term `-B` in the projection matrix represents the baseline offset, translated into pixel units using the focal length `f_x`. This ensures the stereo cameras are correctly modeled for depth estimation. Without this term, depth computations from stereo images would not be possible.
-
----
 
 ### ROS1 Example:
 ```
@@ -952,8 +911,6 @@ Together, extrinsics are represented by a **4x4 transformation matrix**:
 
 This matrix transforms 3D points from the **left camera coordinate system** into the **right camera coordinate system**.
 
----
-
 ### **Find Camera Extrinsics**
 
 In the ROS2 topics, **camera extrinsics are not explicitly included**. However, they can usually be found in the following contexts:
@@ -974,8 +931,6 @@ Extrinsics are typically saved in the camera's calibration files, which ZED prov
 - **Rotation matrix (R):** Transform between the left and right cameras.
 - **Translation vector (t):** The stereo baseline distance.
 
----
-
 ### **ZED Camera Extrinsics in a Stereo Setup**
 For the ZED camera:
 - **Left Camera Frame:** The primary frame, often aligned with the global/world frame.
@@ -984,8 +939,6 @@ For the ZED camera:
 <div align="center">
   <img src="media/right_extrinsic.png" width="200">
 </div>
-
----
 
 ### **Retrieve Extrinsics**
 
@@ -1010,8 +963,6 @@ For the ZED camera:
      ```
    - The exported `.conf` or `.yaml` file contains extrinsics.
 
----
-
 ### **Camera Info Topic and its Role**
 
 The **camera info topic** (e.g., `/zed/zed_node/left/camera_info`) provides essential calibration parameters for a camera, including:
@@ -1019,8 +970,6 @@ The **camera info topic** (e.g., `/zed/zed_node/left/camera_info`) provides esse
 1. **Intrinsics** – Describe the camera's internal parameters.
 2. **Distortion Coefficients** – Used for correcting lens distortion.
 3. **Extrinsics (for stereo cameras)** – Indirectly describe the spatial relationship between paired cameras (e.g., left and right in stereo setups).
-
----
 
 ### **Structure of Camera Info**
 
@@ -1041,8 +990,6 @@ P: [fx', 0, cx', Tx,
     0, fy', cy', Ty,
     0,  0,   1,  0]  # Projection Matrix
 ```
-
----
 
 ### **Role of Intrinsics**
 
@@ -1078,8 +1025,6 @@ The fourth column of `P` gives the **translation component**:
 
 This measures the distance between the left and right cameras in meters.
 
----
-
 ### **ZED Camera ROS2 Wrapper**
 
 In the ZED ROS2 wrapper, the `/camera_info` topic for the left and right cameras contains the matrices `R` and `P`. Here’s how to interpret them:
@@ -1089,8 +1034,6 @@ In the ZED ROS2 wrapper, the `/camera_info` topic for the left and right cameras
 - **Right Camera:** 
   - `P` includes the right camera's intrinsic parameters and the baseline distance `T_x`.
   - `R` contains the rotation between the cameras (often identity).
-
----
 
 - The extrinsics between the **left and right cameras** can be calculated as:
   - **Translation (baseline):** Use `T_x` from the right camera's `P` matrix.
