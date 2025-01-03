@@ -758,6 +758,7 @@ Using the disparity, the depth `Z` of a point can be calculated as:
 The term `-B` in the projection matrix represents the baseline offset, translated into pixel units using the focal length `f_x`. This ensures the stereo cameras are correctly modeled for depth estimation. Without this term, depth computations from stereo images would not be possible.
 
 ### ROS1 Example:
+#### Left Camera Image
 ```
 $ rostopic echo /tesse/left_cam/camera_info
 header: 
@@ -782,9 +783,34 @@ roi:
   width: 0
   do_rectify: False
 ```
+#### Right Camera Image
+```
+$ rostopic echo /tesse/right_cam/camera_info
+header: 
+  seq: 642
+  stamp: 
+    secs: 46
+    nsecs: 404879999
+  frame_id: "right_cam"
+height: 480
+width: 720
+distortion_model: "radial-tangential"
+D: [0.0, 0.0, 0.0, 0.0]
+K: [415.69219381653056, 0.0, 360.0, 0.0, 415.69219381653056, 240.0, 0.0, 0.0, 1.0]
+R: [1.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 1.0]
+P: [415.69219381653056, 0.0, 360.0, 0.0, 0.0, 415.69219381653056, 240.0, 0.0, 0.0, 0.0, 1.0, 0.0]
+binning_x: 0
+binning_y: 0
+roi: 
+  x_offset: 0
+  y_offset: 0
+  height: 0
+  width: 0
+  do_rectify: False
+```
 ### ROS2 Example
 #### Left Camera Image
-
+This is an example of a `plumb_bob` or `radial-tangential` distortion model.
 ```
 /zed/zed_node/left/camera_info
 header:
@@ -842,6 +868,130 @@ roi:
   height: 0
   width: 0
   do_rectify: false (edited) 
+```
+
+This is an example of a `rational_polynomial` distortion model.
+```
+header:
+  stamp:
+    sec: 1735929176
+    nanosec: 533141665
+  frame_id: zed_left_camera_optical_frame
+height: 720
+width: 1280
+distortion_model: rational_polynomial
+d:
+- 0.0
+- 0.0
+- 0.0
+- 0.0
+- 0.0
+- 0.0
+- 0.0
+- 0.0
+k:
+- 522.0733032226562
+- 0.0
+- 632.2969360351562
+- 0.0
+- 522.0733032226562
+- 362.0469970703125
+- 0.0
+- 0.0
+- 1.0
+r:
+- 1.0
+- 0.0
+- 0.0
+- 0.0
+- 1.0
+- 0.0
+- 0.0
+- 0.0
+- 1.0
+p:
+- 522.0733032226562
+- 0.0
+- 632.2969360351562
+- 0.0
+- 0.0
+- 522.0733032226562
+- 362.0469970703125
+- 0.0
+- 0.0
+- 0.0
+- 1.0
+- 0.0
+binning_x: 0
+binning_y: 0
+roi:
+  x_offset: 0
+  y_offset: 0
+  height: 0
+  width: 0
+  do_rectify: false
+```
+
+This is an example of a `pinhole` distortion model.
+```
+header:
+  stamp:
+    sec: 12243
+    nanosec: 466470554
+  frame_id: front_stereo_camera:left_rgb
+height: 600
+width: 960
+distortion_model: pinhole
+d:
+- 0.14781099557876587
+- -0.03231300041079521
+- 0.008822999894618988
+- 0.5179129838943481
+- -0.06707999855279922
+- 0.016950000077486038
+- -0.0001939999929163605
+- -3.5000000934815034e-05
+k:
+- 478.90576171875
+- 0.0
+- 480.0
+- 0.0
+- 478.9057922363281
+- 300.0
+- 0.0
+- 0.0
+- 1.0
+r:
+- 1.0
+- 0.0
+- 0.0
+- 0.0
+- 1.0
+- 0.0
+- 0.0
+- 0.0
+- 1.0
+p:
+- 478.90576171875
+- 0.0
+- 480.0
+- 0.0
+- 0.0
+- 478.9057922363281
+- 300.0
+- 0.0
+- 0.0
+- 0.0
+- 1.0
+- 0.0
+binning_x: 0
+binning_y: 0
+roi:
+  x_offset: 0
+  y_offset: 0
+  height: 0
+  width: 0
+  do_rectify: false
 ```
 
 #### Right Camera Image
