@@ -379,87 +379,6 @@ min_depth: 0.6266739368438721
 max_depth: 7.9091668128967285
 ```
 ---
-## Depth Image Intrinsics and Distortions
-Depth images have associated **camera info**. The **camera info** provides essential calibration and metadata about the camera that captured the depth image. This information is critical for interpreting depth values correctly and for projecting depth pixels into 3D space.
-
-### Camera Info for Depth Images
-Depth images typically provide per-pixel depth values, where each pixel represents the distance to a surface in the scene. To use this data effectively (e.g., to compute 3D coordinates), you need the following information, often provided in the **camera info** message:
-
-1. **Camera Intrinsics**:
-   - **Intrinsic Matrix (K)**: Maps pixel coordinates to 3D camera coordinates.
-     - Format:
-       ```
-       K = [fx,  0, cx,
-             0, fy, cy,
-             0,  0,  1]
-       ```
-       Where:
-       - `fx` and `fy` are the focal lengths in pixels.
-       - `cx` and `cy` are the optical center coordinates (principal point).
-
-2. **Projection Matrix (P)**:
-   - Used to project 3D points into the 2D image plane.
-   - Includes additional parameters for stereo cameras.
-
-3. **Distortion Model and Coefficients**:
-   - If the depth image is raw (not rectified), these parameters describe the lens distortions.
-   - Rectified depth images typically have zero distortion coefficients.
-
-4. **Resolution**:
-   - The height and width of the depth image, which must match the dimensions of the camera info.
-
-5. **Frame ID**:
-   - Indicates the coordinate frame associated with the depth image (e.g., `left_camera` or `depth_camera`).
-
-### How to Use Camera Info with Depth Images
-1. **Project Depth to 3D**:
-   - Using the intrinsic matrix `K`, you can compute the 3D position of any pixel (`u`, `v`) with depth `D`:
-
-   <div align="center">
-     <img src="media/depth_calculation.png" width="400">
-   </div>
-   
-     Where X, Y, Z are the 3D coordinates in the camera frame.
-
-2. **Stereo Depth**:
-   - For stereo cameras, the projection matrix `P` also includes the baseline (distance between the two cameras), which is critical for converting disparity to depth.
-
-3. **Point Cloud Generation**:
-   - Depth images and camera info are combined to generate point clouds in the camera's coordinate frame.
-
-### Example of Camera Info for Depth Images
-Here’s how a typical `CameraInfo` message might look for a depth camera:
-
-```python
-camera_info = CameraInfo()
-camera_info.header.stamp = <timestamp>
-camera_info.header.frame_id = "depth_camera"
-camera_info.height = 720
-camera_info.width = 1280
-camera_info.distortion_model = "plumb_bob"  # Or "none" for rectified images
-camera_info.d = [-0.1, 0.01, 0.0, 0.0, 0.0]  # Distortion coefficients
-camera_info.k = [700.0, 0.0, 640.0, 0.0, 700.0, 360.0, 0.0, 0.0, 1.0]  # Intrinsic matrix
-camera_info.r = [1.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 1.0]  # Rectification matrix
-camera_info.p = [700.0, 0.0, 640.0, 0.0, 0.0, 700.0, 360.0, 0.0, 0.0, 0.0, 1.0, 0.0]  # Projection matrix
-```
-
-### How to Attach Camera Info to Depth Images in ROS 2
-When publishing depth images, you can also publish the corresponding `CameraInfo` on a separate topic. For example:
-
-- Depth Image Topic: `/camera/depth/image_raw`
-- Camera Info Topic: `/camera/depth/camera_info`
-
-The subscriber can then synchronize the two topics using tools like `message_filters` in ROS.
-
-### How to Check If Your Depth Images Have Camera Info
-1. **Inspect the Camera Info Topic**:
-   Use `ros2 topic echo /camera/depth/camera_info` to see if the camera info is published.
-
-2. **Check the Data**:
-   Look for parameters like `K`, `P`, and `distortion_model` in the output.
-
----
-
 ## RGB Image Intrinsics and Distortions
 
 For zed camera, Distortion factor : [k1, k2, p1, p2, k3, k4, k5, k6, s1, s2, s3, s4]. Radial (k1, k2, k3, k4, k5, k6), Tangential (p1,p2) and Prism (s1, s2, s3, s4) distortion [[reference]](https://www.stereolabs.com/docs/api/python/classpyzed_1_1sl_1_1CameraParameters.html)
@@ -558,6 +477,87 @@ The **rational polynomial** and **plumb bob / radial tangential** models are pro
 ### **Key Difference**
 - **Rectified**: `camera_info.d` values are all zeros (no distortion present).
 - **Raw**: `camera_info.d` contains non-zero coefficients that describe the lens distortion.
+
+---
+
+## Depth Image Intrinsics and Distortions
+Depth images have associated **camera info**. The **camera info** provides essential calibration and metadata about the camera that captured the depth image. This information is critical for interpreting depth values correctly and for projecting depth pixels into 3D space.
+
+### Camera Info for Depth Images
+Depth images typically provide per-pixel depth values, where each pixel represents the distance to a surface in the scene. To use this data effectively (e.g., to compute 3D coordinates), you need the following information, often provided in the **camera info** message:
+
+1. **Camera Intrinsics**:
+   - **Intrinsic Matrix (K)**: Maps pixel coordinates to 3D camera coordinates.
+     - Format:
+       ```
+       K = [fx,  0, cx,
+             0, fy, cy,
+             0,  0,  1]
+       ```
+       Where:
+       - `fx` and `fy` are the focal lengths in pixels.
+       - `cx` and `cy` are the optical center coordinates (principal point).
+
+2. **Projection Matrix (P)**:
+   - Used to project 3D points into the 2D image plane.
+   - Includes additional parameters for stereo cameras.
+
+3. **Distortion Model and Coefficients**:
+   - If the depth image is raw (not rectified), these parameters describe the lens distortions.
+   - Rectified depth images typically have zero distortion coefficients.
+
+4. **Resolution**:
+   - The height and width of the depth image, which must match the dimensions of the camera info.
+
+5. **Frame ID**:
+   - Indicates the coordinate frame associated with the depth image (e.g., `left_camera` or `depth_camera`).
+
+### How to Use Camera Info with Depth Images
+1. **Project Depth to 3D**:
+   - Using the intrinsic matrix `K`, you can compute the 3D position of any pixel (`u`, `v`) with depth `D`:
+
+   <div align="center">
+     <img src="media/depth_calculation.png" width="400">
+   </div>
+   
+     Where X, Y, Z are the 3D coordinates in the camera frame.
+
+2. **Stereo Depth**:
+   - For stereo cameras, the projection matrix `P` also includes the baseline (distance between the two cameras), which is critical for converting disparity to depth.
+
+3. **Point Cloud Generation**:
+   - Depth images and camera info are combined to generate point clouds in the camera's coordinate frame.
+
+### Example of Camera Info for Depth Images
+Here’s how a typical `CameraInfo` message might look for a depth camera:
+
+```python
+camera_info = CameraInfo()
+camera_info.header.stamp = <timestamp>
+camera_info.header.frame_id = "depth_camera"
+camera_info.height = 720
+camera_info.width = 1280
+camera_info.distortion_model = "plumb_bob"  # Or "none" for rectified images
+camera_info.d = [-0.1, 0.01, 0.0, 0.0, 0.0]  # Distortion coefficients
+camera_info.k = [700.0, 0.0, 640.0, 0.0, 700.0, 360.0, 0.0, 0.0, 1.0]  # Intrinsic matrix
+camera_info.r = [1.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 1.0]  # Rectification matrix
+camera_info.p = [700.0, 0.0, 640.0, 0.0, 0.0, 700.0, 360.0, 0.0, 0.0, 0.0, 1.0, 0.0]  # Projection matrix
+```
+
+### How to Attach Camera Info to Depth Images in ROS 2
+When publishing depth images, you can also publish the corresponding `CameraInfo` on a separate topic. For example:
+
+- Depth Image Topic: `/camera/depth/image_raw`
+- Camera Info Topic: `/camera/depth/camera_info`
+
+The subscriber can then synchronize the two topics using tools like `message_filters` in ROS.
+
+### How to Check If Your Depth Images Have Camera Info
+1. **Inspect the Camera Info Topic**:
+   Use `ros2 topic echo /camera/depth/camera_info` to see if the camera info is published.
+
+2. **Check the Data**:
+   Look for parameters like `K`, `P`, and `distortion_model` in the output.
 
 ---
 
