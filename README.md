@@ -4,8 +4,9 @@ This repository is about inspecting images and their instrinsics and extrinsics.
 # Repo Overview
 
 This repo consists of 4 parts. They are:
-- **[RGB Image]()**
-- **[Depth Image]()**
+- **[Stereo Camera Image]()**
+   - [RGB Image]()
+   - [Depth Image]()
 - **[Stereo Camera Intrinsics]()**
    - [RGB Image]()
    - [Depth Image]()
@@ -26,8 +27,8 @@ source image_inspector_venv/bin/activate
 pip3 install --upgrade pip
 pip3 install -r requirements.txt
 ```
-
-# RGB Image
+# Stereo Camera Image
+## RGB Image
 In an **RGB image**, the "image value" refers to the intensity of the **red (R)**, **green (G)**, and **blue (B)** color channels for each pixel in the image. These values determine the color and brightness of the pixel.
 
 - **Pixel Values:** Each pixel in an RGB image has 3 components namely Red (R), Green (G), Blue (B). These components are represented as integer values in most image formats.
@@ -141,7 +142,7 @@ Green channel - Min: 0, Max: 255, Mean: 101.240
 Blue channel - Min: 0, Max: 255, Mean: 99.684
 ```
 
-# Depth Image
+## Depth Image
 - For unit8 type grayscaled depth images, they are 8 bit (0-255) depth images having a range of 0 m to 0.255 m. You can export them as jpg or png files. You can directly visualize color depth plots. 
 
 - For unit16 type grayscaled depth images, they are 16 bit (0-65535) depth images having a range of 0 m to 65.535 m [[reference]](https://support.stereolabs.com/hc/en-us/articles/5365701074967-Why-is-the-depth-map-so-dark). You can export them as png files. You have to normalize them to 8 bit (0-255) to visualize color depth plots. 
@@ -205,8 +206,6 @@ The **`32FC1` encoding** in a depth map refers to the following characteristics:
   - `0` indicates the data is in **little-endian** format (common in most systems).
      - The least significant byte (LSB) comes first, followed by more significant bytes. 
 
----
-
 2. **Converting Data**
 - Each depth value is represented by 4 consecutive bytes.
 - For example:
@@ -253,8 +252,6 @@ The metadata indicates:
 - **Max Depth:** 4.605 meters
 
 The data values fall within this range.
-
----
 
 The `32FC1` encoding represents each depth value as a 32-bit floating-point number in meters. The `data` array contains byte values that need to be grouped in sets of 4 and rearranged according to little-endian format before converting them to floating-point numbers. These values correspond to distances in meters within the range 0.507 m to 4.605 m. 
 
@@ -321,8 +318,6 @@ data:
 4. **General Pattern:**
    - The depth values gradually increase, which likely corresponds to distances in the scene.
 
----
-
 5. **Depth Values for the Provided Data:**
 
 Using the above interpretation:
@@ -340,8 +335,6 @@ Using the above interpretation:
 | 101 | 3   | 853        |
 | 103 | 3   | 855        |
 | ... | ... | ...        |
-
----
 
 6. **Depth Range**
 - The data seems to correspond to increasing depths in millimeters.
@@ -389,13 +382,15 @@ min_depth: 0.6266739368438721
 max_depth: 7.9091668128967285
 ```
 ---
-## RGB Image Intrinsics and Distortions
+
+# Stereo Camera Intrinsics
+## RGB Image 
 
 For zed camera, Distortion factor : [k1, k2, p1, p2, k3, k4, k5, k6, s1, s2, s3, s4]. Radial (k1, k2, k3, k4, k5, k6), Tangential (p1,p2) and Prism (s1, s2, s3, s4) distortion [[reference]](https://www.stereolabs.com/docs/api/python/classpyzed_1_1sl_1_1CameraParameters.html)
 
 The **rational polynomial** and **plumb bob / radial tangential** models are prominent methods for modeling lens distortion in camera calibration. Here's a detailed comparison of the two:
 
-### **1. Rational Polynomial Model**
+### 1. Rational Polynomial Model
 - **Key Idea**: Uses rational polynomials to model lens distortion, which means it applies a polynomial for both the numerator and denominator of a rational function to represent distortion effects.
 - **Distortion Parameters**: 
   - Radial distortion is modeled using terms like r^2, r^4, r^6, ...
@@ -490,7 +485,7 @@ The **rational polynomial** and **plumb bob / radial tangential** models are pro
 
 ---
 
-## Depth Image Intrinsics and Distortions
+## Depth Image
 Depth images have associated **camera info**. The **camera info** provides essential calibration and metadata about the camera that captured the depth image. This information is critical for interpreting depth values correctly and for projecting depth pixels into 3D space.
 
 ### Camera Info for Depth Images
