@@ -6,7 +6,7 @@ This repository is about inspecting images and their instrinsics and extrinsics.
 This repo consists of 4 parts. They are:
 - **[Stereo Camera Image]()**
    - [RGB Image](https://github.com/ArghyaChatterjee/image-inspector/tree/main?tab=readme-ov-file#rgb-image)
-   - [Depth Image]()
+   - [Depth Image](https://github.com/ArghyaChatterjee/image-inspector/tree/main?tab=readme-ov-file#depth-image)
 - **[Stereo Camera Intrinsics]()**
    - [RGB Image]()
    - [Depth Image]()
