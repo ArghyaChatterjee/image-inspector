@@ -501,7 +501,7 @@ The **rational polynomial** and **plumb bob / radial tangential** models are pro
 - If you need a model for high-precision applications with complex distortion, go for the **rational polynomial model**.
 - For most standard cameras (opencv) and typical calibration tasks, the **plumb bob model** is simpler and sufficient.
 
-### **Distortion Models**
+### **Different Types of Distortion Models**
 1. **Plumb Bob / Radial-Tangential**
    - Commonly used in most camera calibration tools (e.g., OpenCV).
    - Supports radial and tangential distortion.
