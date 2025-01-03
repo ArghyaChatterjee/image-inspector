@@ -1173,7 +1173,7 @@ For stereo cameras like ZED, extrinsics define the spatial relationship between 
    - Contains a baseline translation `T_x` or `T_y` (depending on stereo configuration).
    - `T_x` = `-f_x` \ `baseline`, where "baseline" is the physical distance between the cameras.
 
-## **Extrinsics Derivation Between Stereo Cameras**
+## **Extrinsics Matrix Derivation**
 
 ### From `R` (Rotation Matrix)
 The matrix `R` defines the orientation difference between the left and right cameras. This is a **relative rotation**.
