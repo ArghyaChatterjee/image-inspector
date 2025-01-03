@@ -1,6 +1,16 @@
 # Image Inspector
 This repository is about inspecting images and their instrinsics and extrinsics.
 
+# Repo Overview
+
+This repo consists of 4 parts. They are:
+- **[RGB Image]()**
+- **[Depth Image]()**
+- **[Stereo Camera Intrinsics]()**
+   - [RGB Image]()
+   - [Depth Image]()
+- **[Stereo Camera Extrinsics]()**
+
 # Setup the repo
 ## Clone the repo:
 ```bash
