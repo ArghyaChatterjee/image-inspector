@@ -1,7 +1,7 @@
 # Image Inspector
 This repository is about inspecting images and their instrinsics and extrinsics.
 
-# Repo Overview
+# Overview
 
 This repo consists of 4 parts. They are:
 - **[Stereo Camera Image](https://github.com/ArghyaChatterjee/image-inspector/tree/main?tab=readme-ov-file#stereo-camera-image)**
