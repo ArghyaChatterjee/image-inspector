@@ -153,7 +153,7 @@ Blue channel - Min: 0, Max: 255, Mean: 99.684
 - For float32 type grayscaled depth images, they are 32 bit ```(1.4×10^−45-3.4×10^38)``` depth images. Most depth cameras do not have a depth measurement range beyond several hundred meters. So, a float32 image can comfortably represent depth values, commonly from 0 m up to several kilometers (e.g., 3,400,000 meters), if needed. You have to normalize them to 8 bit (0-255) to visualize color depth plots. You can't export them as png files, you have to export as .exr (OpenEXR) or .tiff format (you can use GIMP to visualize them).
 
 ### Read as ROS2 topics
-In ROS2 fir zed cameras, 32 bit float in meters and 16 bit unsigned int in millimeters are used.  
+In ROS2 for zed cameras, 32 bit float in meters and 16 bit unsigned int in millimeters are used. You have to change the parameters inside `common.yaml` file of `params` folder. Specially, `openni_depth_mode` should be `false` for `32bit float` meter units (32FC1) and should be set to `true` for 16bit uchar (mono16) millimeter units.  
 
 #### Depth values with 32 bit float value 
 ```
