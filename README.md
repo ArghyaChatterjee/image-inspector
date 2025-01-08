@@ -80,6 +80,11 @@ In an **RGB image**, the "image value" refers to the intensity of the **red (R)*
 Different parameters for camera configurations can be changed. Visit the camera control for zed [[here]](https://www.stereolabs.com/docs/video/camera-controls).
 
 ### Read as ROS2 topics
+
+In ROS2 for zed cameras :
+- RGB Images are 8 bit integers (3 channels = 3x8 bit = 24 bit) and the encoding is `bgra8`. An extra channel alpha defines the opacity of each pixel and usually between `0` to `255`. 
+  - For zed by default, the `alpha` value is mostly `255` and you can't change the encoding for the camera images with `params.yaml` files when launching the zed camera node.
+ 
 Pixel values can be read as ros 2 topics directly.
 ```
 $ ros2 topic echo /zed/zed_node/left/image_rect_color
@@ -158,7 +163,9 @@ Blue channel - Min: 0, Max: 255, Mean: 99.684
 - For float32 type grayscaled depth images, they are 32 bit ```(1.4×10^−45-3.4×10^38)``` depth images. Most depth cameras do not have a depth measurement range beyond several hundred meters. So, a float32 image can comfortably represent depth values, commonly from 0 m up to several kilometers (e.g., 3,400,000 meters), if needed. You have to normalize them to 8 bit (0-255) to visualize color depth plots. You can't export them as png files, you have to export as .exr (OpenEXR) or .tiff format (you can use GIMP to visualize them).
 
 ### Read as ROS2 topics
-In ROS2 for zed cameras, 32 bit float in meters and 16 bit unsigned int in millimeters are used. You have to change the parameters inside `common.yaml` file of `params` folder. Specially, `openni_depth_mode` should be `false` for `32bit float` meter units (32FC1) and should be set to `true` for 16bit uchar (mono16) millimeter units.  
+In ROS2 for zed cameras, 
+- Depth images are 32 bit float (encoding = `32FC1`) in meters and 16 bit unsigned int (encoding = `mono16`) in millimeters.
+  - To change the parameters inside `common.yaml` file of `params` folder where `openni_depth_mode` should be `false` for `32bit float` meter units (32FC1) and should be set to `true` for `16bit uchar` (mono16) millimeter units. 
 
 #### Depth values with 32 bit float value 
 ```
