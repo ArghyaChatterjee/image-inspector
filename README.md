@@ -14,7 +14,7 @@ This repo consists of 4 parts. They are:
    - [Intrinsics Matrix Derivation](https://github.com/ArghyaChatterjee/image-inspector/tree/main?tab=readme-ov-file#intrinsics-matrix-derivation)
 - **[Stereo Camera Extrinsics](https://github.com/ArghyaChatterjee/image-inspector/tree/main?tab=readme-ov-file#stereo-camera-extrinsics)**
    - [Extrinsics Matrix Derivation](https://github.com/ArghyaChatterjee/image-inspector/tree/main?tab=readme-ov-file#extrinsics-matrix-derivation)
-- **[List of Supported Image Encodings]()**
+- **[List of Supported Image Encodings](https://github.com/ArghyaChatterjee/image-inspector/tree/main?tab=readme-ov-file#list-of-supported-image-encodings)**
 
 # Setup the repo
 ## Clone the repo:
