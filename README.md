@@ -14,6 +14,7 @@ This repo consists of 4 parts. They are:
    - [Intrinsics Matrix Derivation](https://github.com/ArghyaChatterjee/image-inspector/tree/main?tab=readme-ov-file#intrinsics-matrix-derivation)
 - **[Stereo Camera Extrinsics](https://github.com/ArghyaChatterjee/image-inspector/tree/main?tab=readme-ov-file#stereo-camera-extrinsics)**
    - [Extrinsics Matrix Derivation](https://github.com/ArghyaChatterjee/image-inspector/tree/main?tab=readme-ov-file#extrinsics-matrix-derivation)
+- **[List of Supported Image Encodings]()**
 
 # Setup the repo
 ## Clone the repo:
@@ -1254,6 +1255,83 @@ Where:
 
 ---
 
-The **baseline** is approximately **0.063 meters** or **63 mm**.
+The **baseline** is approximately **0.063 meters** or **63 mm**. 
 
+# List of Supported Image Encodings:
 
+1. **8UC1**:  
+   - 8-bit unsigned single-channel image (grayscale).  
+   - Common for black-and-white or depth images.
+
+2. **8UC3**:  
+   - 8-bit unsigned three-channel image (RGB or BGR color).  
+   - Often used for standard color images.
+
+3. **8UC4**:  
+   - 8-bit unsigned four-channel image (e.g., BGRA or RGBA).  
+   - Includes an alpha channel for transparency.
+
+4. **8SC1**:  
+   - 8-bit signed single-channel image.  
+   - Can represent signed pixel values.
+
+5. **16UC1**:  
+   - 16-bit unsigned single-channel image.  
+   - Commonly used for high-precision grayscale or depth data.
+
+6. **16UC3**:  
+   - 16-bit unsigned three-channel image.  
+   - Useful for high-precision color images.
+
+7. **16SC1**:  
+   - 16-bit signed single-channel image.  
+   - Allows signed pixel values with high precision.
+
+8. **32SC1**:  
+   - 32-bit signed single-channel image.  
+   - Used for data requiring higher dynamic range.
+
+9. **32FC1**:  
+   - 32-bit floating-point single-channel image.  
+   - Commonly used for precise depth data in meters.
+
+10. **64FC1**:  
+    - 64-bit floating-point single-channel image.  
+    - Extremely high precision for special applications like scientific computations.
+
+11. **Mono8** (Alias for `8UC1`):  
+    - Single-channel grayscale images with 8-bit depth.
+
+12. **Mono16** (Alias for `16UC1`):  
+    - Single-channel grayscale images with 16-bit depth.
+
+13. **BGR8**:  
+    - 8-bit unsigned three-channel image in BGR format.  
+    - Standard color format used in OpenCV.
+
+14. **RGB8**:  
+    - 8-bit unsigned three-channel image in RGB format.  
+    - Common for display purposes.
+
+15. **BGRA8**:  
+    - 8-bit unsigned four-channel image in BGRA format.  
+    - Includes an alpha channel for transparency.
+
+16. **RGBA8**:  
+    - 8-bit unsigned four-channel image in RGBA format.  
+    - Includes an alpha channel for transparency.
+
+17. **Passthrough**:  
+    - Directly uses the native encoding of the image without conversion.  
+    - Retains the original encoding from the source image.
+
+---
+
+## Brief Description of Each Encoding
+
+- **8U, 16U, 32F** indicate unsigned integers or floating points with the respective bit depth.  
+- **C1, C3, C4** denote the number of channels (1 for grayscale, 3 for color, 4 for color + alpha).  
+- Encodings like **BGR8** and **RGB8** specify the order of color channels.  
+- **Passthrough** is a special case where no transformation is applied, and the input format is retained as-is.
+
+These encodings allow the `CvBridge` class to handle a wide variety of image formats efficiently for conversion between ROS Image messages and OpenCV image matrices.
