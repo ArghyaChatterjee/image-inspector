@@ -107,6 +107,11 @@ data:
 ---
 
 ```
+The alpha channel in an image `bgra8` represents transparency or opacity for each pixel. While typical images in formats like JPEG / JPG use three color channels—red, green, and blue (RGB), PNG images with an alpha channel add a fourth channel to indicate how opaque or transparent each pixel is.
+
+R (Red): Intensity of red color in a pixel, G (Green): Intensity of green color in a pixel, B (Blue): Intensity of blue color in a pixel, and A (Alpha): Opacity or transparency level of a pixel. An alpha value of 0 makes a pixel fully transparent, 255 makes it fully opaque, and values in between create partial transparency for blending effects.
+
+When the ZED camera provides `bgra8` encoded images, the alpha channel is typically always fully opaque (255), meaning the images are completely visible without any transparency.
 ### Read from PNG files
 Pixel values range between 0-255 in a png/jpg file. Each pixel has 3 vales which are Blue, Green and Red. Here is how you can read them:
 ```python
