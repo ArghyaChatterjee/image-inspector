@@ -402,7 +402,10 @@ max_depth: 7.9091668128967285
 # Stereo Camera Intrinsics
 ## RGB Image 
 
-For zed camera, Distortion factor : [k1, k2, p1, p2, k3, k4, k5, k6, s1, s2, s3, s4]. Radial (k1, k2, k3, k4, k5, k6), Tangential (p1,p2) and Prism (s1, s2, s3, s4) distortion [[reference]](https://www.stereolabs.com/docs/api/python/classpyzed_1_1sl_1_1CameraParameters.html)
+For zed camera, distortion factors are [k1, k2, p1, p2, k3, k4, k5, k6, s1, s2, s3, s4]. [[reference]](https://www.stereolabs.com/docs/api/python/classpyzed_1_1sl_1_1CameraParameters.html)
+
+- Radial (k1, k2, k3, k4, k5, k6), Tangential (p1,p2) distortion and
+- Prism (s1, s2, s3, s4) distortion 
 
 The **rational polynomial** and **plumb bob / radial tangential** models are prominent methods for modeling lens distortion in camera calibration. Here's a detailed comparison of the two:
 
@@ -446,6 +449,7 @@ The **rational polynomial** and **plumb bob / radial tangential** models are pro
 
 ### **Different Types of Distortion Models**
 1. **Plumb Bob / Radial-Tangential**
+   - Most common for zed and azure kinect cameras.
    - Commonly used in most camera calibration tools (e.g., OpenCV).
    - Supports radial and tangential distortion.
    - **Expected Values**: **5 coefficients**:
@@ -459,6 +463,7 @@ The **rational polynomial** and **plumb bob / radial tangential** models are pro
    ```
 
 2. **Equidistant (Fisheye Model)**
+   - Most common for realsense cameras.
    - Often used for fisheye or wide-angle cameras.
    - **Expected Values**: **4 coefficients**:
      - `k1`, `k2` (radial distortion coefficients).
