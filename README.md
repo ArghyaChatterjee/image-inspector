@@ -447,8 +447,10 @@ The **rational polynomial** and **plumb bob / radial tangential** models are pro
 - If you need a model for high-precision applications with complex distortion, go for the **rational polynomial model**.
 - For most standard cameras (opencv) and typical calibration tasks, the **plumb bob model** is simpler and sufficient.
 
-### **Different Types of Distortion Models**
-1. **Plumb Bob / Radial-Tangential**
+### **Different Types of Camera & Distortion Models**
+#### Pinhole Camera Model
+1. *No Distortion*
+2. *Plumb Bob / Radial-Tangential Distortion*
    - Most common for zed and azure kinect cameras.
    - Commonly used in most camera calibration tools (e.g., OpenCV).
    - Supports radial and tangential distortion.
@@ -462,7 +464,7 @@ The **rational polynomial** and **plumb bob / radial tangential** models are pro
    camera_info.d = [k1, k2, p1, p2, k3]
    ```
 
-2. **Equidistant (Fisheye Model)**
+3. *Equidistant (Fisheye Model) Distortion*
    - Most common for realsense cameras.
    - Often used for fisheye or wide-angle cameras.
    - **Expected Values**: **4 coefficients**:
@@ -474,7 +476,7 @@ The **rational polynomial** and **plumb bob / radial tangential** models are pro
    camera_info.d = [k1, k2, k3, k4]
    ```
 
-3. **Omnidirectional**
+#### Omnidirectional
    - Used for omnidirectional or 360-degree cameras.
    - Can support a variable number of coefficients depending on the calibration.
 
