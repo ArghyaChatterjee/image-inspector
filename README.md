@@ -450,7 +450,8 @@ The **rational polynomial** and **plumb bob / radial tangential** models are pro
 ### **Different Types of Camera & Distortion Models**
 #### Pinhole Camera Model
 1. *No Distortion*
-A simplified model that assumes a single point of projection, where light rays pass through a pinhole to form an image on a flat surface (image plane).
+
+- A simplified model that assumes a single point of projection, where light rays pass through a pinhole to form an image on a flat surface (image plane).
 - **Characteristics**:
   - No lens distortion.
   - Linear mapping between 3D world points and 2D image points.
@@ -491,7 +492,7 @@ A simplified model that assumes a single point of projection, where light rays p
    camera_info.d = [k1, k2, k3, k4]
    ```
 
-#### Omnidirectional
+#### Omnidirectional Camera Model
    - Used for omnidirectional or 360-degree cameras.
    - Can support a variable number of coefficients depending on the calibration.
 
