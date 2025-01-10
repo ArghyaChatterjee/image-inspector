@@ -1,4 +1,5 @@
-### 1. **Pinhole Camera Model**
+# **Pinhole Camera Model**
+## *No Distortion*
 - **Description**: A simplified model that assumes a single point of projection, where light rays pass through a pinhole to form an image on a flat surface (image plane).
 - **Characteristics**:
   - No lens distortion.
