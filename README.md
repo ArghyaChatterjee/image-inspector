@@ -383,7 +383,7 @@ Using the above interpretation:
 
 Each pair of numbers in the `data` field represents a depth value in millimeters, with the MSB coming second. These values can be directly converted to real-world depths by calculating `Depth` = `MSB` x `256` + `LSB`. 
 
-### Read PNG files
+### Read as PNG files
 The depth values are in millimeters. You can print the depth values in millimeters:
 ```bash
 cd scripts
@@ -422,6 +422,136 @@ header:
 min_depth: 0.6266739368438721
 max_depth: 7.9091668128967285
 ```
+
+### Read as ROS1 topics:
+
+#### 16-Bit Depth Image (`16UC1`)
+In ROS1, the ZED Mini camera publishes depth images as **16-bit unsigned integers** when the encoding is `16UC1`. Each pixel represents the depth in **millimeters**.
+
+```bash
+$ rostopic echo -n1 /zedm/zed_node/depth/depth_registered
+header: 
+  seq: 0
+  stamp: 
+    secs: 1737399426
+    nsecs: 106011058
+  frame_id: "zedm_left_camera_optical_frame"
+height: 1080
+width: 1920
+encoding: "16UC1"
+is_bigendian: 0
+step: 3840
+data: [238, 7, 236, 7, 232, 7, ...]
+```
+
+1. **Encoding:**
+   - `16UC1`:
+     - **16U**: 16-bit unsigned integers (2 bytes per pixel).
+     - **C1**: Single channel (grayscale image).
+   - Depth values are stored as millimeters.
+
+2. **Endianess:**
+   - `is_bigendian = 0`: Little-endian format is used. The least significant byte (LSB) comes first, followed by the most significant byte (MSB).
+   - For each depth value:
+     ```
+     Depth = (MSB × 256) + LSB
+     ```
+
+3. **Example Conversions:**
+   - From the `data` array:
+     ```
+     [238, 7]  => Depth = (7 × 256) + 238 = 2046 mm
+     [236, 7]  => Depth = (7 × 256) + 236 = 2044 mm
+     [232, 7]  => Depth = (7 × 256) + 232 = 2040 mm
+     ```
+
+4. **Depth Values for the Provided Data:**
+
+| LSB | MSB | Depth (mm) |
+|-----|-----|------------|
+| 238 | 7   | 2046       |
+| 236 | 7   | 2044       |
+| 232 | 7   | 2040       |
+| 194 | 6   | 1698       |
+| 48  | 6   | 1584       |
+
+5. **General Information:**
+   - Each pixel represents the distance to a surface in **millimeters**.
+   - The step size (`3840`) indicates the number of bytes in each row of the image: `step = width × 2` (1920 × 2).
+
+---
+
+#### 32-Bit Depth Image (`32FC1`)
+In ROS1, the ZED Mini camera also publishes depth images as **32-bit floating-point values** when the encoding is `32FC1`. Each pixel represents the depth in **meters**.
+
+```bash
+$ rostopic echo -n1 /zedm/zed_node/depth/depth_registered
+header: 
+  seq: 0
+  stamp: 
+    secs: 1737399929
+    nsecs: 668285055
+  frame_id: "zedm_left_camera_optical_frame"
+height: 1080
+width: 1920
+encoding: "32FC1"
+is_bigendian: 0
+step: 7680
+data: [255, 127, 198, 180, 211, 63, ...]
+```
+
+1. **Encoding:**
+   - `32FC1`:
+     - **32F**: 32-bit floating-point numbers.
+     - **C1**: Single channel (grayscale image).
+   - Depth values are stored in **meters** with high precision.
+
+2. **Endianess:**
+   - `is_bigendian = 0`: Little-endian format is used. The least significant byte (LSB) comes first.
+
+3. **Conversion Process:**
+   - Each depth value is represented by 4 consecutive bytes in the `data` array.
+   - To convert the bytes into a 32-bit float:
+     - Rearrange the bytes into the correct order (little-endian).
+     - Use a tool or programming language (e.g., Python's `struct` module) to decode the 4 bytes into a floating-point number.
+
+4. **Example Conversions:**
+   - From the `data` array:
+     ```
+     [255, 127, 198, 180]
+       => Rearrange: [180, 198, 127, 255]
+       => Decode as float: 1.23 meters
+     [211, 63, 198, 180]
+       => Rearrange: [180, 198, 63, 211]
+       => Decode as float: 2.13 meters
+     ```
+
+5. **Depth Values for the Provided Data:**
+
+| Bytes (Reordered)      | Depth (Meters) |
+|-------------------------|----------------|
+| `180, 198, 127, 255`   | 1.23           |
+| `180, 198, 63, 211`    | 2.13           |
+| `178, 168, 63, 211`    | 2.08           |
+| `79, 27, 63, 211`      | 2.02           |
+| `138, 32, 63, 210`     | 1.99           |
+
+6. **General Information:**
+   - Each pixel represents the distance to a surface in **meters**.
+   - The step size (`7680`) indicates the number of bytes in each row of the image: `step = width × 4` (1920 × 4).
+
+---
+
+#### Summary of ROS1 Depth Topics
+
+| Encoding  | Description                      | Units      | Bytes/Pixel | Step Size | Notes                       |
+|-----------|----------------------------------|------------|-------------|-----------|-----------------------------|
+| `16UC1`   | 16-bit unsigned integer (depth) | Millimeters| 2           | 3840      | Little-endian format        |
+| `32FC1`   | 32-bit floating-point (depth)   | Meters     | 4           | 7680      | High precision for real-world distances |
+
+In ROS1, depth images are published using two encodings:
+- **`16UC1`** for millimeter-level depth with compact storage.
+- **`32FC1`** for precise meter-level depth with floating-point precision.
 ---
 
 ## Mono Image
