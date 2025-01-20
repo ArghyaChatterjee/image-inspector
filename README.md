@@ -424,10 +424,6 @@ max_depth: 7.9091668128967285
 ```
 ---
 
-Here is the revised and corrected version of your text with the necessary changes to make it accurate for `mono8` images:
-
----
-
 ## Mono Image
 In a **Mono image**, the "image value" refers to the intensity of a pixel in the image. Each pixel is represented as a single grayscale value, indicating its brightness, where lower values correspond to darker pixels and higher values to brighter pixels.
 
