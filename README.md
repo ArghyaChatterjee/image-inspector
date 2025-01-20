@@ -8,8 +8,9 @@ This repo consists of 5 parts. They are:
 - **[Stereo Camera Image](https://github.com/ArghyaChatterjee/image-inspector/tree/main?tab=readme-ov-file#stereo-camera-image)**
    - [RGB Image](https://github.com/ArghyaChatterjee/image-inspector/tree/main?tab=readme-ov-file#rgb-image)
    - [Depth Image](https://github.com/ArghyaChatterjee/image-inspector/tree/main?tab=readme-ov-file#depth-image)
+   - [Mono Image](https://github.com/ArghyaChatterjee/image-inspector/tree/main?tab=readme-ov-file#mono-image)
 - **[Stereo Camera Intrinsics](https://github.com/ArghyaChatterjee/image-inspector/tree/main?tab=readme-ov-file#stereo-camera-intrinsics)**
-   - [RGB Image](https://github.com/ArghyaChatterjee/image-inspector/tree/main?tab=readme-ov-file#rgb-image-1)
+   - [RGB & Mono Image](https://github.com/ArghyaChatterjee/image-inspector/tree/main?tab=readme-ov-file#rgb-image-1)
    - [Depth Image](https://github.com/ArghyaChatterjee/image-inspector/tree/main?tab=readme-ov-file#depth-image-1)
    - [Intrinsics Matrix Derivation](https://github.com/ArghyaChatterjee/image-inspector/tree/main?tab=readme-ov-file#intrinsics-matrix-derivation)
 - **[Stereo Camera Extrinsics](https://github.com/ArghyaChatterjee/image-inspector/tree/main?tab=readme-ov-file#stereo-camera-extrinsics)**
@@ -110,7 +111,6 @@ data:
 - 255
 - 49
 - '...'
----
 
 ```
 The alpha channel in an image `bgra8` represents transparency or opacity for each pixel. While typical images in formats like JPEG / JPG use three color channels—red, green, and blue (RGB), PNG images with an alpha channel add a fourth channel to indicate how opaque or transparent each pixel is.
@@ -118,6 +118,31 @@ The alpha channel in an image `bgra8` represents transparency or opacity for eac
 R (Red): Intensity of red color in a pixel, G (Green): Intensity of green color in a pixel, B (Blue): Intensity of blue color in a pixel, and A (Alpha): Opacity or transparency level of a pixel. An alpha value of 0 makes a pixel fully transparent, 255 makes it fully opaque, and values in between create partial transparency for blending effects.
 
 When the ZED camera provides `bgra8` encoded images, the alpha channel is typically always fully opaque (255), meaning the images are completely visible without any transparency.
+
+### Read as ROS1 topics
+
+In ROS1 for tesse cameras :
+- RGB Images are 8 bit integers (3 channels = 3x8 bit = 24 bit) and the encoding is `rgb8`.  
+ 
+Pixel values can be read as ros 1 topics directly.
+```
+$ rostopic echo /tesse/left_cam/rgb/image_raw
+header: 
+  seq: 865
+  stamp: 
+    secs: 59
+    nsecs: 404879999
+  frame_id: "left_cam"
+height: 480
+width: 720
+encoding: "rgb8"
+is_bigendian: 0
+step: 2160
+data: [56, 53, 45, 52, ...]
+```
+
+R (Red): Intensity of red color in a pixel, G (Green): Intensity of green color in a pixel, B (Blue): Intensity of blue color in a pixel, and A (Alpha). 
+
 ### Read from PNG files
 Pixel values range between 0-255 in a png/jpg file. Each pixel has 3 vales which are Blue, Green and Red. Here is how you can read them:
 ```python
@@ -399,8 +424,112 @@ max_depth: 7.9091668128967285
 ```
 ---
 
+Here is the revised and corrected version of your text with the necessary changes to make it accurate for `mono8` images:
+
+---
+
+## Mono Image
+In a **Mono image**, the "image value" refers to the intensity of a pixel in the image. Each pixel is represented as a single grayscale value, indicating its brightness, where lower values correspond to darker pixels and higher values to brighter pixels.
+
+- **Pixel Values:** Each pixel in a Mono image has a single intensity value. These values are represented as integer values in most image formats.
+
+- **Range of Values:**
+   - In **8-bit images** (the most common format for PNG/JPG), each pixel value ranges from **0 to 255**, where:
+     - `0` represents black (no brightness).
+     - `255` represents white (maximum brightness).
+
+- **Interpretation:**
+   - **0:** Black (no intensity).
+   - **255:** White (maximum intensity).
+   - Intermediate values (e.g., `128`) represent shades of gray.
+
+- **Format Differences:**
+   - **PNG:** Lossless compression, preserves exact pixel values.
+   - **JPG:** Lossy compression, may slightly alter pixel values to reduce file size.
+
+<div align="center">
+  <img src="media/mono_image.png" width="800">
+</div>
+
+### Read as ROS2 Topics
+
+In ROS2 for ZED cameras:
+- Mono Images are 8-bit integers (1 channel = 8 bits), and the encoding is `mono8`. Each pixel's intensity value directly represents its brightness.
+  - For ZED, the `alpha` channel is not used in `mono8` encoding. You cannot change the encoding of the camera images with `params.yaml` files when launching the ZED camera node.
+
+Pixel values can be read as ROS2 topics directly:
+```bash
+$ ros2 topic echo /zed/zed_node/left/image_rect_gray
+header:
+  stamp:
+    sec: 1732307124
+    nanosec: 135420664
+  frame_id: zed_left_camera_optical_frame
+height: 1080
+width: 1920
+encoding: mono8
+is_bigendian: 0
+step: 1920
+data:
+- 35
+- 93
+- 115
+- 255
+- 40
+- 98
+- 120
+- 255
+- 49
+- '...'
+```
+
+### Read as ROS1 Topics
+
+In ROS1 for Tesse cameras:
+- Mono Images are 8-bit integers (1 channel = 8 bits), and the encoding is `mono8`.
+
+Pixel values can be read as ROS1 topics directly:
+```bash
+$ rostopic echo /tesse/left_cam/mono/image_raw
+header: 
+  seq: 1584
+  stamp: 
+    secs: 101
+    nsecs: 704899999
+  frame_id: "left_cam"
+height: 480
+width: 720
+encoding: "mono8"
+is_bigendian: 0
+step: 720
+data: [51, 52, 51, 51, ...]
+```
+
+### Read from PNG Files
+Pixel values range between `0-255` in a PNG/JPG file. Each pixel has a single value representing its grayscale intensity. Here is how you can read them:
+```bash
+cd scripts
+python3 print_pixel_values_from_mono_images.py
+```
+Here is the output:
+```bash
+Mono values for the entire image:
+[[35 40 50 ... 120 125 130]
+ [37 42 55 ... 122 127 132]
+ [39 45 60 ... 125 130 135]
+ ...
+ [200 210 220 ... 180 190 200]]
+
+Mono value at (100, 100): 128
+Mono value at (200, 150): 150
+
+Statistics:
+Min: 0, Max: 255, Mean: 127.45
+```
+---
+
 # Stereo Camera Intrinsics
-## RGB Image 
+## RGB & Mono Image 
 
 For zed camera, distortion factors are [k1, k2, p1, p2, k3, k4, k5, k6, s1, s2, s3, s4]. [[reference]](https://www.stereolabs.com/docs/api/python/classpyzed_1_1sl_1_1CameraParameters.html)
 
@@ -800,6 +929,8 @@ The term `-B` in the projection matrix represents the baseline offset, translate
 This is an example of a `radial-tangential` distortion model.  
 
 #### Left Camera Image
+
+- Echo `left_camera_info` topic:
 ```
 $ rostopic echo /tesse/left_cam/camera_info
 header: 
@@ -824,6 +955,8 @@ roi:
   width: 0
   do_rectify: False
 ```
+
+- Echo `right_camera_info` topic:
 #### Right Camera Image
 ```
 $ rostopic echo /tesse/right_cam/camera_info
