@@ -1427,6 +1427,9 @@ For the ZED camera:
      ```
    - The exported `.conf` or `.yaml` file contains extrinsics.
 
+### What's the difference between a camera frame and an optical frame
+In ROS, the traditional frame convention is x forward, y left and z up. For depth images and pointclouds, z needs to be forward frame and the traditional ros convention doesn't support. So, that's why you will see the optical frames are rotated than normal camera frame is ros2. 
+
 ### **Camera Info Topic and its Role**
 
 The **camera info topic** (e.g., `/zed/zed_node/left/camera_info`) provides essential calibration parameters for a camera, including:
