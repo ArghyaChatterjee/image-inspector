@@ -1428,7 +1428,7 @@ For the ZED camera:
    - The exported `.conf` or `.yaml` file contains extrinsics.
 
 ### What's the difference between a camera frame and an optical frame
-In ROS, the traditional frame convention is x forward, y left and z up. For depth images and pointclouds, z needs to be forward frame and the traditional ros convention doesn't support. So, you will see there is a new frame called optical frames have been introduced and optical frames are rotated than normal camera frame in ros2. 
+In ROS, the traditional frame convention is x forward, y left and z up. For depth images and pointclouds, z needs to be in the forward frame and the traditional ros convention doesn't support. So, you will see there is a new frame called optical frame that has been introduced and optical frames (left and right) are rotated than normal camera frame in ROS so that they become z forward, x right and y down.
 
 ### **Camera Info Topic and its Role**
 
