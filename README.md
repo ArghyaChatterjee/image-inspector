@@ -782,6 +782,11 @@ The **rational polynomial** and **plumb bob / radial tangential** models are pro
 ## Depth Image
 Depth images have associated **camera info**. The **camera info** provides essential calibration and metadata about the camera that captured the depth image. This information is critical for interpreting depth values correctly and for projecting depth pixels into 3D space.
 
+### Why do Depth Image need Camera Info
+Depth images alignments with RGB images are different for different cameras. As a result the optical center for the depth map is different than rgb images for different cameras. For example:
+- ZED is a passive camera. ZED's Depth image is aligned with the RGB image. So, the depth camera info is the same as the rgb camera info.
+- Realsense is an active camera. Realsense's Depth image is aligned with the RGB image. So, the depth camera info is the same as the rgb camera info.  
+
 ### Camera Info for Depth Images
 Depth images typically provide per-pixel depth values, where each pixel represents the distance to a surface in the scene. To use this data effectively (e.g., to compute 3D coordinates), you need the following information, often provided in the **camera info** message:
 
