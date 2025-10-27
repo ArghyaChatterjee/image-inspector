@@ -1,7 +1,7 @@
 # Image Inspector
 This repository is about inspecting images and their instrinsics and extrinsics.
 
-# Overview
+# Table of Contents
 
 This repo consists of 5 parts. They are:
 - **[Setup the repo](https://github.com/ArghyaChatterjee/image-inspector/tree/main?tab=readme-ov-file#setup-the-repo)**
