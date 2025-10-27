@@ -4,18 +4,18 @@ This repository is about inspecting images and their instrinsics and extrinsics.
 # Table of Contents
 
 This repo consists of 5 parts. They are:
-- **[Setup the repo](https://github.com/ArghyaChatterjee/image-inspector/tree/main?tab=readme-ov-file#setup-the-repo)**
-- **[Stereo Camera Image](https://github.com/ArghyaChatterjee/image-inspector/tree/main?tab=readme-ov-file#stereo-camera-image)**
-   - [RGB Image](https://github.com/ArghyaChatterjee/image-inspector/tree/main?tab=readme-ov-file#rgb-image)
-   - [Depth Image](https://github.com/ArghyaChatterjee/image-inspector/tree/main?tab=readme-ov-file#depth-image)
-   - [Mono Image](https://github.com/ArghyaChatterjee/image-inspector/tree/main?tab=readme-ov-file#mono-image)
-- **[Stereo Camera Intrinsics](https://github.com/ArghyaChatterjee/image-inspector/tree/main?tab=readme-ov-file#stereo-camera-intrinsics)**
-   - [RGB & Mono Image](https://github.com/ArghyaChatterjee/image-inspector/tree/main?tab=readme-ov-file#rgb-image-1)
-   - [Depth Image](https://github.com/ArghyaChatterjee/image-inspector/tree/main?tab=readme-ov-file#depth-image-1)
-   - [Intrinsics Matrix Derivation](https://github.com/ArghyaChatterjee/image-inspector/tree/main?tab=readme-ov-file#intrinsics-matrix-derivation)
-- **[Stereo Camera Extrinsics](https://github.com/ArghyaChatterjee/image-inspector/tree/main?tab=readme-ov-file#stereo-camera-extrinsics)**
-   - [Extrinsics Matrix Derivation](https://github.com/ArghyaChatterjee/image-inspector/tree/main?tab=readme-ov-file#extrinsics-matrix-derivation)
-- **[List of Supported Image Encodings](https://github.com/ArghyaChatterjee/image-inspector/tree/main?tab=readme-ov-file#list-of-supported-image-encodings)**
+- **[Setup the repo](#setup-the-repo)**
+- **[Stereo Camera Image](#stereo-camera-image)**
+   - [RGB Image](#rgb-image)
+   - [Depth Image](#depth-image)
+   - [Mono Image](#mono-image)
+- **[Stereo Camera Intrinsics](#stereo-camera-intrinsics)**
+   - [RGB & Mono Image](#rgb-image-1)
+   - [Depth Image](#depth-image-1)
+   - [Intrinsics Matrix Derivation](#intrinsics-matrix-derivation)
+- **[Stereo Camera Extrinsics](#stereo-camera-extrinsics)**
+   - [Extrinsics Matrix Derivation](#extrinsics-matrix-derivation)
+- **[List of Supported Image Encodings](#list-of-supported-image-encodings)**
 
 # Setup the repo
 ## Clone the repo:
