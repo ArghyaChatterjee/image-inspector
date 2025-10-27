@@ -1362,6 +1362,11 @@ roi:
 
 # Stereo Camera Extrinsics
 
+<div align="center">
+  <img src="media/stereo_depth.png" width="395">
+  <img src="media/depth_vs_disparity.png" width="425">
+</div>
+
 Camera **extrinsics** describe the spatial relationship between 2 camera pairs. They include:
 
 1. **Translation (t):** The position of the camera in the world coordinate system, typically represented as a 3D vector `(x, y, z)`.
